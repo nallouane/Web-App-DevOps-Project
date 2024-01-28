@@ -1,6 +1,29 @@
 #Documentation of changes
 
-I created a new feature branch to modify the code to incorporate the delivery_date column. To do this you will need to update both the app.py and order.html files in the repository. However, these changes weren't necessary so I 'git reverted' back to the previous commit.
+# Changes Documentation
+
+## Introduction
+
+In this commit, I implemented a feature branch to introduce the `delivery_date` column into the codebase. The modifications involved updating both the `app.py` and `order.html` files within the repository.
+
+## Feature Implementation
+
+### Code Modifications
+
+1. **app.py**
+   - Added handling for the `delivery_date` column in the relevant parts of the code.
+   - Incorporated necessary logic to interact with the new data.
+
+2. **order.html**
+   - Updated the HTML template to display and capture the `delivery_date` in the order form.
+
+### Reversion
+
+Upon further consideration and feedback, it was determined that the introduction of the `delivery_date` column was not necessary for the current scope of the project. To revert the changes and restore the codebase to its previous state, the following actions were taken:
+
+```bash
+git revert <commit_hash_of_feature_branch>
+
 
 # Networking Module Documentation
 
