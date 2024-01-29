@@ -47,3 +47,21 @@ Before using the networking module, ensure that Terraform is installed. Navigate
 
 ```bash
 terraform init
+
+# AKS Cluster Module Documentation
+
+This commit also includes updates to the AKS cluster module. The following changes were made:
+
+## Introduction
+
+In the cluster module, I implemented the provisioning of an AKS cluster using Infrastructure as Code (IaC). The necessary Azure resources, including the AKS cluster, node pool, and service principal, were defined in the main.tf file.
+
+## Input and Output Variables
+
+Input variables for customizing the AKS cluster and output variables capturing essential information, such as the cluster name, ID, and Kubernetes configuration, were defined in the variables.tf and outputs.tf files, respectively.
+
+initialize the Terraform configuration:
+
+```bash
+terraform init
+
