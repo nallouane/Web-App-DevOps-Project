@@ -65,3 +65,5 @@ initialize the Terraform configuration:
 ```bash
 terraform init
 
+I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
+
