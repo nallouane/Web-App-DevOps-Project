@@ -67,5 +67,61 @@ terraform init
 
 I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
 
-After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the the terrafomr and state files to my local .gitignore and pushing to github.
+After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
+
+# Kubernetes Deployment Documentation
+
+## Overview
+
+This documentation outlines the steps taken to deploy a containerized Flask application onto a Terraform-provisioned AKS (Azure Kubernetes Service) cluster. The deployment includes creating a Kubernetes Deployment and Service using manifests.
+
+## Deployment Manifests
+
+The Kubernetes manifests (`application-manifest.yaml`) define the following resources:
+
+### Deployment
+
+- **Name:** flask-app-deployment
+- **Replicas:** 2
+- **Selector Label:** app: flask-app
+- **Pod Template Label:** app: flask-app
+- **Container:** nallouane/myimage:v1
+- **Port:** 5000
+- **Deployment Strategy:** Rolling Update with maxUnavailable=1 and maxSurge=1
+
+### Service
+
+- **Name:** flask-app-service
+- **Selector Label:** app: flask-app
+- **Port Configuration:** TCP protocol, port 80, targetPort 5000
+- **Service Type:** ClusterIP
+
+## Deployment Process
+
+1. **Set Kubernetes Context:**
+   - Ensure that the correct Kubernetes context is set using `kubectl config use-context <your-aks-context-name>`.
+
+2. **Apply Manifests:**
+   - Deploy the manifests using `kubectl apply -f application-manifest.yaml`.
+
+3. **Monitor Deployment:**
+   - Use `kubectl get pods -w` to monitor the deployment process. Ensure that pods transition to the `Running` state.
+
+4. **Verification:**
+   - After deployment, use `kubectl get pods` and `kubectl get services` to verify the status and details of deployed resources.
+
+## Troubleshooting
+
+If you encounter issues during deployment, consider the following troubleshooting steps:
+
+- Check the correctness of image name and tag.
+- Verify image visibility and repository permissions.
+- Review network connectivity to the container registry.
+- Ensure authentication and pull secrets are correctly configured.
+
+## Cleanup
+
+To remove the deployed resources, use `kubectl delete -f application-manifest.yaml` and verify deletion using `kubectl get pods` and `kubectl get services`.
+
+---
 
