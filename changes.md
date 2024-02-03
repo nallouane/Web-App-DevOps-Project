@@ -67,3 +67,5 @@ terraform init
 
 I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
 
+After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the the terrafomr and state files to my local .gitignore and pushing to github.
+
