@@ -16,5 +16,5 @@ steps:
     containerRegistry: 'docker-service-connection'
     repository: 'nallouane/myimage'
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+    Dockerfile: '**/dockerfile'
     tags: 'latest'
