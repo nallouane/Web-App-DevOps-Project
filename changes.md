@@ -65,6 +65,8 @@ initialize the Terraform configuration:
 ```bash
 terraform init
 
+##Issues encountered
+
 I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
 
 After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
@@ -124,4 +126,59 @@ If you encounter issues during deployment, consider the following troubleshootin
 To remove the deployed resources, use `kubectl delete -f application-manifest.yaml` and verify deletion using `kubectl get pods` and `kubectl get services`.
 
 ---
+## CI/CD Pipeline Documentation
 
+This document provides comprehensive information about the Continuous Integration/Continuous Deployment (CI/CD) pipeline in Azure DevOps for this project.
+
+### Azure DevOps Pipeline Configuration:
+
+#### 2. Build Pipeline:
+
+- **Build Trigger:** The build pipeline is triggered automatically on every push to the main branch.
+- **Build Steps:**
+  - Retrieve source code from GitHub.
+  - Build and compile the application.
+  - Run tests to ensure code quality.
+  - Publish artifacts.
+
+#### 3. Release Pipeline:
+
+- **Release Trigger:** The release pipeline is triggered automatically upon successful completion of the build pipeline.
+- **Release Stages:**
+  - **Dev Stage:** Deploy to a staging environment for validation.
+  - **Prod Stage:** Deploy to the production environment.
+
+#### 4. Docker Hub Integration:
+
+- **Docker Image Build:** The CI/CD pipeline builds a Docker image during the build stage.
+- **Docker Image Push:** The pipeline pushes the Docker image to Docker Hub during the release stage.
+
+#### 5. AKS (Azure Kubernetes Service) Integration:
+
+- **Deployment:** The application is deployed to an AKS cluster during the release stage.
+- **Validation:** Port forwarding is used for local testing to ensure the application runs correctly on the AKS cluster.
+
+### Validation Steps:
+
+1. **Monitor Pod Status:**
+   - Use `kubectl get pods` to check the status of pods within the AKS cluster.
+
+2. **Initiate Port Forwarding:**
+   - Use `kubectl port-forward` to forward traffic to the local machine for testing.
+
+3. **Access Locally Exposed Address:**
+   - Open a web browser and navigate to `http://localhost:8080` (or the specified port) to test the application functionality.
+
+4. **Validate Application Functionality:**
+   - Perform various tests to ensure the application operates correctly.
+
+5. **Clean Up:**
+   - Terminate port forwarding using `Ctrl + C` in the terminal.
+
+### Issues Encountered:
+
+Forgot to set up your pipeline to have the agents that will be used to run the jobs. Oversight was pointed out to me when trying to build the pipeline.
+
+Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error but was frustrating at the time
+
+---
