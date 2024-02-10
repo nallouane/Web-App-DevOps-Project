@@ -1,5 +1,3 @@
-#Documentation of changes
-
 # Changes Documentation
 
 ## Introduction
@@ -23,6 +21,7 @@ Upon further consideration and feedback, it was determined that the introduction
 
 ```bash
 git revert <commit_hash_of_feature_branch>
+```
 
 
 # Networking Module Documentation
@@ -47,6 +46,7 @@ Before using the networking module, ensure that Terraform is installed. Navigate
 
 ```bash
 terraform init
+```
 
 # AKS Cluster Module Documentation
 
@@ -64,8 +64,9 @@ initialize the Terraform configuration:
 
 ```bash
 terraform init
+```
 
-##Issues encountered
+## Issues encountered
 
 I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
 
@@ -101,7 +102,7 @@ The Kubernetes manifests (`application-manifest.yaml`) define the following reso
 ## Deployment Process
 
 1. **Set Kubernetes Context:**
-   - Ensure that the correct Kubernetes context is set using `kubectl config use-context <your-aks-context-name>`.
+   - Setting the correct Kubernetes context is set using `kubectl config use-context <your-aks-context-name>`.
 
 2. **Apply Manifests:**
    - Deploy the manifests using `kubectl apply -f application-manifest.yaml`.
@@ -112,14 +113,16 @@ The Kubernetes manifests (`application-manifest.yaml`) define the following reso
 4. **Verification:**
    - After deployment, use `kubectl get pods` and `kubectl get services` to verify the status and details of deployed resources.
 
-## Troubleshooting
+### Issues Encountered:
 
-If you encounter issues during deployment, consider the following troubleshooting steps:
+I used these steps to troubleshoot:
 
 - Check the correctness of image name and tag.
 - Verify image visibility and repository permissions.
 - Review network connectivity to the container registry.
 - Ensure authentication and pull secrets are correctly configured.
+
+but all went smoothly.
 
 ## Cleanup
 
@@ -132,7 +135,7 @@ This document provides comprehensive information about the Continuous Integratio
 
 ### Azure DevOps Pipeline Configuration:
 
-#### 2. Build Pipeline:
+#### Build Pipeline:
 
 - **Build Trigger:** The build pipeline is triggered automatically on every push to the main branch.
 - **Build Steps:**
@@ -141,19 +144,19 @@ This document provides comprehensive information about the Continuous Integratio
   - Run tests to ensure code quality.
   - Publish artifacts.
 
-#### 3. Release Pipeline:
+#### Release Pipeline:
 
 - **Release Trigger:** The release pipeline is triggered automatically upon successful completion of the build pipeline.
 - **Release Stages:**
   - **Dev Stage:** Deploy to a staging environment for validation.
   - **Prod Stage:** Deploy to the production environment.
 
-#### 4. Docker Hub Integration:
+#### Docker Hub Integration:
 
 - **Docker Image Build:** The CI/CD pipeline builds a Docker image during the build stage.
 - **Docker Image Push:** The pipeline pushes the Docker image to Docker Hub during the release stage.
 
-#### 5. AKS (Azure Kubernetes Service) Integration:
+#### AKS (Azure Kubernetes Service) Integration:
 
 - **Deployment:** The application is deployed to an AKS cluster during the release stage.
 - **Validation:** Port forwarding is used for local testing to ensure the application runs correctly on the AKS cluster.
@@ -167,18 +170,12 @@ This document provides comprehensive information about the Continuous Integratio
    - Use `kubectl port-forward` to forward traffic to the local machine for testing.
 
 3. **Access Locally Exposed Address:**
-   - Open a web browser and navigate to `http://localhost:8080` (or the specified port) to test the application functionality.
-
-4. **Validate Application Functionality:**
-   - Perform various tests to ensure the application operates correctly.
-
-5. **Clean Up:**
-   - Terminate port forwarding using `Ctrl + C` in the terminal.
+   - Open a web browser and navigate to `http://localhost:8080` to test the application functionality.
 
 ### Issues Encountered:
 
 Forgot to set up your pipeline to have the agents that will be used to run the jobs. Oversight was pointed out to me when trying to build the pipeline.
 
-Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error but was frustrating at the time
+Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error but was frustrating at the time.
 
 ---
