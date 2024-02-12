@@ -123,6 +123,12 @@ def add_order():
 
     return redirect(url_for('display_orders'))
 
+#test feature to see if the pipeline works properly
+@app.route('/health')
+def health_check():
+    return 'OK'
+
+
 # run the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
