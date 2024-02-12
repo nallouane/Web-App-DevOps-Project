@@ -179,3 +179,61 @@ Forgot to set up your pipeline to have the agents that will be used to run the j
 Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error but was frustrating at the time.
 
 ---
+# AKS Cluster Monitoring Documentation
+
+## Overview
+
+This documentation outlines the steps taken to establish effective monitoring and alerting for an Azure Kubernetes Service (AKS) cluster. Proper monitoring is essential for ensuring the optimal performance, resource allocation, and stability of the AKS environment.
+
+## Metrics Explorer Configuration
+
+After enabling container insights, the following charts were created in the Metrics Explorer to provide a comprehensive overview of the AKS cluster's performance:
+
+1. **Average Node CPU Usage:**
+   - *Purpose:* Track CPU usage of AKS cluster nodes for efficient resource allocation and performance issue detection.
+
+2. **Average Pod Count:**
+   - *Purpose:* Display the average number of pods running in the AKS cluster, aiding in capacity evaluation and workload distribution analysis.
+
+3. **Used Disk Percentage:**
+   - *Purpose:* Monitor disk usage to prevent storage-related issues by tracking the utilized disk space.
+
+4. **Bytes Read and Written per Second:**
+   - *Purpose:* Monitor data I/O to identify potential performance bottlenecks by providing insights into data transfer rates.
+
+## Log Analytics Configuration
+
+Log Analytics was configured to capture detailed information for more in-depth analysis:
+
+1. **Average Node CPU Usage Percentage per Minute:**
+   - *Purpose:* Record granular data on node-level CPU usage, capturing logs per minute for detailed analysis.
+
+2. **Average Node Memory Usage Percentage per Minute:**
+   - *Purpose:* Track node-level memory usage to detect memory-related performance concerns and optimize resource allocation.
+
+3. **Pods Counts with Phase:**
+   - *Purpose:* Provide information on pod counts with different phases (Pending, Running, Terminating) for workload distribution insights.
+
+4. **Find Warning Value in Container Logs:**
+   - *Purpose:* Proactively detect issues or errors within containers by configuring Log Analytics to search for warning values in container logs.
+
+5. **Monitoring Kubernetes Events:**
+   - *Purpose:* Monitor Kubernetes events, including pod scheduling, scaling activities, and errors, to ensure overall cluster health and stability.
+
+## Alert Rule Configuration
+
+### Disk Usage Alert
+
+- **Objective:** Trigger an alarm when the used disk percentage in the AKS cluster exceeds 90%.
+- **Frequency:** Check every 5 minutes.
+- **Loopback Period:** 15 minutes.
+- **Notification:** Configure alerts to be sent to the specified email address for proactive issue detection and resolution planning.
+
+### CPU and Memory Usage Alerts
+
+- **Objective:** Trigger alerts when CPU usage and memory working set percentage exceed 80%.
+- **Purpose:** Ensure timely notification when critical resources approach their limits, preventing decreased application performance.
+- **Frequency:** Check every 5 minutes.
+- **Notification:** Alerts configured to notify the specified email address for prompt response and resource optimization.
+
+By implementing these monitoring and alerting configurations, the AKS cluster is equipped to maintain optimal performance and respond promptly to potential issues.
