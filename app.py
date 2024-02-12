@@ -126,7 +126,7 @@ def add_order():
 #test feature to see if the pipeline works properly
 @app.route('/health')
 def health_check():
-    return 'OK'
+    return 'It works'
 
 
 # run the app
