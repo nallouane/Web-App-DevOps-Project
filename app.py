@@ -20,16 +20,16 @@ credential = ManagedIdentityCredential()
 secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 # Access the secret values from Key Vault
-sever_name = secret_client.get_secret("sever-name").value
-sever_username = secret_client.get_secret("sever-username").value
-sever_password = secret_client.get_secret("sever-password").value
+server_name = secret_client.get_secret("server-name").value
+server_username = secret_client.get_secret("server-username").value
+server_password = secret_client.get_secret("server-password").value
 database_name = secret_client.get_secret("database-name").value
 
 # database connection 
-server = sever_name
+server = server_name
 database = database_name
-username = sever_username
-password = sever_password
+username = server_username
+password = server_password
 driver= '{ODBC Driver 18 for SQL Server}'
 
 # Create the connection string
