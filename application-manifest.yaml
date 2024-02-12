@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-app-container
-        image: nallouane/myimage:v1
+        image: nallouane/myimage:latest
         ports:
         - containerPort: 5000
   strategy:
