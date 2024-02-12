@@ -17,6 +17,7 @@ spec:
       containers:
       - name: flask-app-container
         image: nallouane/myimage:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
   strategy:
