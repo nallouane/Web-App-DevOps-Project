@@ -237,3 +237,7 @@ Log Analytics was configured to capture detailed information for more in-depth a
 - **Notification:** Alerts configured to notify the specified email address for prompt response and resource optimization.
 
 By implementing these monitoring and alerting configurations, the AKS cluster is equipped to maintain optimal performance and respond promptly to potential issues.
+
+---
+
+# AKS integration with Azure Key Vault
