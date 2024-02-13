@@ -150,27 +150,27 @@ The terraform configuration has 3 files:
 
 ## networking-module/variables.tf
 
-## `resource_group_name`
+### `resource_group_name`
 
 - **Purpose:** This variable defines the name of the Azure Resource Group where the networking resources will be deployed.
 - **Type:** `string`
 - **Default:** `"aks-rg"`
 
-## `location`
+### `location`
 
 - **Purpose:** Specifies the Azure region where the networking resources will be provisioned.
 - **Type:** `string`
 - **Default:** `"UK South"`
 
-## `vnet_address_space`
+### `vnet_address_space`
 
 - **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses.
 - **Type:** `list(string)`
 - **Default:** `["10.1.0.0/16"]`
 
-# networking-module/main.tf
+## networking-module/main.tf
 
-## Overview
+### Overview
 
 This Terraform configuration defines networking resources for an Azure Kubernetes Service (AKS) cluster. It creates an Azure Resource Group, a Virtual Network (VNet), and associated subnets. Additionally, it sets up a Network Security Group (NSG) with rules to control inbound traffic to the AKS cluster.
 
@@ -267,26 +267,24 @@ resource "azurerm_network_security_rule" "ssh" {
 
 ## networking-module/variables.tf
 
-## `resource_group_name`
+### `resource_group_name`
 
 - **Purpose:** Specifies the name of the Azure Resource Group to be created for networking resources.
 - **Type:** `string`
 - **Default:** `"example-rg"`
 
-## `location`
+### `location`
 
 - **Purpose:** Specifies the Azure region where the networking resources will be deployed.
 - **Type:** `string`
 - **Default:** `"East US"`
 
-## `vnet_address_space`
+### `vnet_address_space`
 
 - **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses.
 - **Type:** `list(string)`
 - **Default:** `["10.1.0.0/16"]`
 
-
-## Usage
 
 ### Initialization
 
