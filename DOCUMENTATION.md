@@ -492,7 +492,7 @@ This step requires two files:
 - main.tf
 - variables.tf
 
-# main.tf
+## main.tf
 
 **purpose**: This Terraform configuration specifies the required provider (Azure) and its version.
 
