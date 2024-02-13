@@ -135,7 +135,8 @@ The following steps outline how to build a Docker image for my application:
 
    ```bash   
    docker login
-   docker tag <name of the image> <docker-hub-username>/<image-name>:<tag>.
+   docker tag <image-name>:<tag> <docker-hub-username>/<image-name>:<tag>
+   docker push <docker-hub-username>/<image-name>:<tag>
    ```
 
    When this process finished, I logged onto my Docker Hub account and confirm that the relevant docker image was listed the Docker Hub repository. Following this process one should be able to see the image's name, version (tag), and other relevant information.
