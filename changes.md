@@ -267,26 +267,30 @@ resource "azurerm_network_security_rule" "ssh" {
 }
 ```
 
-## networking-module/variables.tf
+# networking-module/outputs.tf
 
-### `resource_group_name`
+## Purpose
+This file defines Terraform outputs for retrieving information about the networking resources created by the networking module.
 
-- **Purpose:** Specifies the name of the Azure Resource Group to be created for networking resources.
-- **Type:** `string`
-- **Default:** `"example-rg"`
+### vnet_id
+- **Purpose:** Virtual Network (VNet) ID output.
+- **Description:** Outputs the ID of the Virtual Network (VNet) created by the networking module.
 
-### `location`
+### control_plane_subnet_id
+- **Purpose:** Control plane subnet ID output.
+- **Description:** Outputs the ID of the subnet reserved for the AKS control plane.
 
-- **Purpose:** Specifies the Azure region where the networking resources will be deployed.
-- **Type:** `string`
-- **Default:** `"East US"`
+### worker_node_subnet_id
+- **Purpose:** Worker node subnet ID output.
+- **Description:** Outputs the ID of the subnet reserved for AKS worker nodes.
 
-### `vnet_address_space`
+### resource_group_name
+- **Purpose:** Resource Group name output.
+- **Description:** Outputs the name of the Azure Resource Group for networking resources. This value is obtained from a variable.
 
-- **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses.
-- **Type:** `list(string)`
-- **Default:** `["10.1.0.0/16"]`
-
+### aks_nsg_id
+- **Purpose:** Network Security Group (NSG) ID output.
+- **Description:** Outputs the ID of the Network Security Group (NSG) created for AKS.
 
 ### Initialization
 
