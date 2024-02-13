@@ -326,70 +326,72 @@ The terraform configuration has 3 files:
 
 ## aks-cluster/variables.tf
 
-### aks_cluster_name
-- **Purpose:** The name of the AKS cluster.
-- **Description:** The name that will be assigned to the AKS cluster.
-- **Type:** String
-- **Default:** "myakscluster"
+The variables.tf allows for proper configuration of the cluster.
 
-### cluster_location
-- **Purpose:** Azure region for AKS cluster deployment.
-- **Description:** The Azure region where the AKS cluster will be deployed.
-- **Type:** String
-- **Default:** "UK South"
+```bash
+   
+variable "aks_cluster_name" {
+  description = "The name of the AKS cluster"
+  type        = string
+  default     = "myakscluster"
+}
 
-### dns_prefix
-- **Purpose:** DNS prefix for AKS cluster.
-- **Description:** The DNS prefix for the AKS cluster, which is used to create the fully qualified domain name (FQDN).
-- **Type:** String
-- **Default:** "myaksclusterdns"
+variable "cluster_location" {
+  description = "The Azure region where the AKS cluster will be deployed"
+  type        = string
+  default     = "UK South"
+}
 
-### kubernetes_version
-- **Purpose:** Kubernetes version for AKS cluster.
-- **Description:** The version of Kubernetes to use for the AKS cluster.
-- **Type:** String
-- **Default:** "1.28.3"
+variable "dns_prefix" {
+  description = "The DNS prefix for the AKS cluster"
+  type        = string
+  default     = "myaksclusterdns"
+}
 
-### service_principal_client_id
-- **Purpose:** Client ID of Azure AD service principal for AKS cluster.
-- **Description:** The client ID of the Azure AD service principal for the AKS cluster.
-- **Type:** String
-- **Default:** "your-service-principal-client-id"
+variable "kubernetes_version" {
+  description = "The version of Kubernetes to use for the AKS cluster"
+  type        = string
+  default     = "1.28.3"
+}
 
-### service_principal_client_secret
-- **Purpose:** Client secret of Azure AD service principal for AKS cluster.
-- **Description:** The client secret of the Azure AD service principal for the AKS cluster.
-- **Type:** String
-- **Default:** "your-service-principal-client-secret"
+variable "service_principal_client_id" {
+  description = "The client ID of the Azure AD service principal for the AKS cluster"
+  type        = string
+  default     = "your-service-principal-client-id"
+}
 
+variable "service_principal_client_secret" {
+  description = "The client secret of the Azure AD service principal for the AKS cluster"
+  type        = string
+  default     = "your-service-principal-client-secret"
+}
+```
 
-**Input variables from the networking module**
+The next section allows for inputs from the networking-module:
 
-### vnet_id
-- **Purpose:** ID of Virtual Network (VNet) for AKS.
-- **Description:** ID of the Virtual Network (VNet) that the AKS cluster will use.
-- **Type:** String
+```bash
+variable "vnet_id" {
+  description = "ID of the Virtual Network (VNet)."
+}
 
-### control_plane_subnet_id
-- **Purpose:** ID of control plane subnet for AKS.
-- **Description:** ID of the subnet reserved for the AKS control plane.
-- **Type:** String
+variable "control_plane_subnet_id" {
+  description = "ID of the control plane subnet."
+}
 
-### worker_node_subnet_id
-- **Purpose:** ID of worker node subnet for AKS.
-- **Description:** ID of the subnet reserved for AKS worker nodes.
-- **Type:** String
+variable "worker_node_subnet_id" {
+  description = "ID of the worker node subnet."
+}
 
-### resource_group_name
-- **Purpose:** Name of Azure Resource Group for networking resources.
-- **Description:** Name of the Azure Resource Group for networking resources.
-- **Type:** String
-- **Default:** "aks-rg"
+variable "resource_group_name" {
+  description = "Name of the Azure Resource Group for networking resources."
+  default = "aks-rg"
+}
 
-### aks_nsg_id
-- **Purpose:** ID of Network Security Group (NSG) for AKS.
-- **Description:** ID of the Network Security Group (NSG) for AKS, used for controlling inbound and outbound traffic.
-- **Type:** String
+# Define more output variables as needed...
+variable "aks_nsg_id" {
+  description = "ID of the Network Security Group (NSG) for AKS."
+}
+```
 
 ## aks-cluster/main.tf
 
