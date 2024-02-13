@@ -617,7 +617,7 @@ The Kubernetes manifests (`application-manifest.yaml`) define the following reso
 - **Replicas:** 2
 - **Selector Label:** app: flask-app
 - **Pod Template Label:** app: flask-app
-- **Container:** nallouane/myimage:v1
+- **Container:** nallouane/myimage:latest
 - **Port:** 5000
 - **Deployment Strategy:** Rolling Update with maxUnavailable=1 and maxSurge=1
 
