@@ -619,6 +619,10 @@ The Kubernetes manifests (`application-manifest.yaml`) define the following reso
 4. **Verification:**
    - After deployment, use `kubectl get pods` and `kubectl get services` to verify the status and details of deployed resources.
 
+### Cleanup
+
+To remove the deployed resources, use `kubectl delete -f application-manifest.yaml` and verify deletion using `kubectl get pods` and `kubectl get services`.
+
 ### Issues Encountered:
 
 I used these steps to troubleshoot:
@@ -630,10 +634,7 @@ I used these steps to troubleshoot:
 
 but all went smoothly.
 
-## Cleanup
-
-To remove the deployed resources, use `kubectl delete -f application-manifest.yaml` and verify deletion using `kubectl get pods` and `kubectl get services`.
-
+---
 ---
 ## CI/CD Pipeline Documentation
 
