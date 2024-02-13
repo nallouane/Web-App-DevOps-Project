@@ -370,6 +370,8 @@ variable "service_principal_client_secret" {
 The next section allows for inputs from the networking-module:
 
 ```bash
+# Input variables from the networking module
+
 variable "vnet_id" {
   description = "ID of the Virtual Network (VNet)."
 }
@@ -533,6 +535,24 @@ module "aks_cluster" {
 ## variables.tf
 
 was used to add as the clinet secret, 'clinet_id' and 'client_secret'
+
+```bash
+   # variables.tf
+
+variable "client_id" {
+  description = "Access key for the provider"
+  type        = string
+  sensitive   = true
+}
+
+variable "client_secret" {
+  description = "Secret key for the provider"
+  type        = string
+  sensitive   = true
+}
+```
+
+---
 
 After all this, by going into the aks-terraform directory, initialise and apply the terraform configuratio using:
 
