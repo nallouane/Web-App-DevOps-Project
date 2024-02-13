@@ -874,7 +874,7 @@ by port forwarding on one of my pods, accessing http://localhost:8080/health ret
 
 ## Issues
 
-Understanding that the azure devops service pipeline didnt pop up with every push to github was hard to get my head around at first. I now understand that it still updates just does not show up only with specific changes.
+Just fully understanding the azure devops service, and how the pipeline works.
 
 ---
 ---
