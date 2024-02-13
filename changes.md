@@ -23,8 +23,110 @@ Upon further consideration and feedback, it was determined that the introduction
 git revert <commit_hash_of_feature_branch>
 ```
 
+# Docker Containerization Process
 
-# Networking Module Documentation
+## Introduction
+
+Using docker, I can containerization the flask application, allowing different teams to work on it, irrespective od their working environment. The process involves creating a 'dockerfile', which will give instructions on containerising the application. Using docker, An image is created, and pushed to dockerhub.
+
+## Dockerfile
+
+1. **Base Image:**
+   - The Dockerfile typically starts with specifying a base image using the `FROM` instruction. This is the starting point for your image and provides the basic operating system and environment. For example:
+     ```dockerfile
+     FROM ubuntu:20.04
+     ```
+
+2. **Working Directory:**
+   - You can set a working directory using the `WORKDIR` instruction, which defines the directory where subsequent instructions will be executed:
+     ```dockerfile
+     WORKDIR /app
+     ```
+
+3. **Copying Files:**
+   - The `COPY` instruction copies files from the host machine to the container's file system. This is often used to add application code, configuration files, or other necessary resources:
+     ```dockerfile
+     COPY . /app
+     ```
+
+4. **Running Commands:**
+   - Use the `RUN` instruction to execute commands inside the container during the image build process. This is commonly used to install dependencies, set up the environment, or perform other tasks:
+     ```dockerfile
+     RUN apt-get update && apt-get install -y python3
+     ```
+
+5. **Exposing Ports:**
+   - The `EXPOSE` instruction informs Docker that the container will listen on specified network ports at runtime. However, it does not actually publish the ports:
+     ```dockerfile
+     EXPOSE 8080
+     ```
+
+6. **Defining Entrypoint or CMD:**
+   - The `CMD` instruction sets the default command to run when a container is started. It can also be overridden at runtime. The `ENTRYPOINT` instruction allows you to configure a container that will run as an executable:
+     ```dockerfile
+     CMD ["python3", "app.py"]
+     ```
+
+# Docker Build Instructions
+
+## Docker Build
+
+The following steps outline how to build a Docker image for your application:
+
+1. **Navigate to the Project Directory:**
+   - Open a terminal and change your working directory to the root of your project where the Dockerfile is located.
+
+   ```bash
+   cd /path/to/your/project
+   ```
+
+2. **Build the Docker Image**
+   -Use the docker build command to build the Docker image. Specify the path to the directory containing the Dockerfile using the dot (.) if the Dockerfile is in the current directory.
+
+   ```bash
+   docker build -t myapp:latest .   
+   ```
+
+   The -t flag is used to tag the image, and myapp:latest is an example tag for your image. Adjust the tag according to your project naming conventions.
+
+   As Docker builds the image, it executes each instruction in the Dockerfile. You'll see output indicating the progress of each step. Pay attention to any error messages or warnings.
+
+   Once the build is complete, you can verify that the image has been created by listing all Docker images on your system.
+
+   ```bash
+   docker images
+   ```
+3. **Run the image locally**
+
+   Run a Docker container locally to ensure the application functions correctly within the containerized environment.
+
+
+   Execute the following command to initiate the Docker container: docker run -p 5000:5000 <name of the image>. This maps port 500 from your local machine to the container, enabling access to the containerized application from your local development environment.
+
+
+   Open a web browser and go to http://127.0.0.1:5000 to interact with the application within the Docker container. Confirm the application works as expected by testing its functionality within the containerized environment.
+
+
+4. **Push to Docker Hub**
+
+   Finally pushed the image to dockerhub:
+
+   ```bash   
+   docker login
+   docker tag <name of the image> <docker-hub-username>/<image-name>:<tag>.
+   ```
+
+   Log in to your Docker Hub account if you're not already logged in. Confirm that your Docker image is listed within your repository. You should be able to see the image's name, version (tag), and other relevant information.
+
+
+## Clean Up
+
+**Remove Containers**: Use the ```docker ps -a command``` to list all containers, including stopped ones. Remove any unnecessary containers with ```docker rm <container-id>``` to free up resources.
+
+**Remove Images**: List all images using ```docker images -a``` and remove any unneeded images with ```docker rmi <image-id>``` to reclaim disk space
+
+
+## Networking Module Documentation
 
 This repository contains Terraform code for defining networking services as part of an Infrastructure as Code (IaC) approach.
 
@@ -38,17 +140,165 @@ The networking module is designed to create essential networking resources neede
 - Worker Node Subnet
 - Network Security Group (NSG)
 
+## Files
+
+The terraform configuration has 3 files:
+
+ - variables.tf
+ - main.tf
+ - outputs.tf
+
+## networking-module/variables.tf
+
+## `resource_group_name`
+
+- **Purpose:** This variable defines the name of the Azure Resource Group where the networking resources will be deployed.
+- **Type:** `string`
+- **Default:** `"aks-rg"`
+
+## `location`
+
+- **Purpose:** Specifies the Azure region where the networking resources will be provisioned.
+- **Type:** `string`
+- **Default:** `"UK South"`
+
+## `vnet_address_space`
+
+- **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses.
+- **Type:** `list(string)`
+- **Default:** `["10.1.0.0/16"]`
+
+# networking-module/main.tf
+
+## Overview
+
+This Terraform configuration defines networking resources for an Azure Kubernetes Service (AKS) cluster. It creates an Azure Resource Group, a Virtual Network (VNet), and associated subnets. Additionally, it sets up a Network Security Group (NSG) with rules to control inbound traffic to the AKS cluster.
+
+## Resources Created
+
+1. **Azure Resource Group**
+
+Creates an Azure Resource Group for networking resources.
+
+**Purpose:** Grouping networking resources for easier management.
+
+```hcl
+resource "azurerm_resource_group" "networking" {
+  name     = var.resource_group_name
+  location = var.location
+}
+```
+
+2. **Virtual Network (VNet)**
+
+**Purpose**: Providing a dedicated network for the AKS cluster.
+
+```hcl
+resource "azurerm_virtual_network" "aks_vnet" {
+  name                = "my_vnet"
+  address_space       = var.vnet_address_space
+  location            = azurerm_resource_group.networking.location
+  resource_group_name = azurerm_resource_group.networking.name
+}
+```
+3. **Subnets**
+
+**Purpose**: Organizing resources and controlling network traffic.
+
+```hcl
+resource "azurerm_subnet" "control_plane_subnet" {
+  name                 = "my_control_plane_subnet"
+  resource_group_name  = azurerm_resource_group.networking.name
+  virtual_network_name = azurerm_virtual_network.aks_vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_subnet" "worker_node_subnet" {
+  name                 = "my_worker_node_subnet"
+  resource_group_name  = azurerm_resource_group.networking.name
+  virtual_network_name = azurerm_virtual_network.aks_vnet.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+```
+4. **Network Security Group (NSG)**
+
+**Purpose**: Controlling inbound network traffic to the AKS cluster.
+
+```hcl
+resource "azurerm_network_security_group" "aks_nsg" {
+  name                = "aks_nsg"
+  location            = azurerm_resource_group.networking.location
+  resource_group_name = azurerm_resource_group.networking.name
+}
+```
+5. **NSG Rules**
+
+**Purpose**: Controlling inbound network traffic to the AKS cluster.
+
+```hcl
+resource "azurerm_network_security_rule" "kube_apiserver" {
+  name                        = "my_nsg_rule1"
+  priority                    = 1001
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = "82.31.251.163"  # Replace with your public IP or IP range
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.networking.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+
+resource "azurerm_network_security_rule" "ssh" {
+  name                        = "my_nsg_rule2"
+  priority                    = 1002
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "82.31.251.163"  # Replace with your public IP or IP range
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.networking.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+```
+
+## networking-module/variables.tf
+
+## `resource_group_name`
+
+- **Purpose:** Specifies the name of the Azure Resource Group to be created for networking resources.
+- **Type:** `string`
+- **Default:** `"example-rg"`
+
+## `location`
+
+- **Purpose:** Specifies the Azure region where the networking resources will be deployed.
+- **Type:** `string`
+- **Default:** `"East US"`
+
+## `vnet_address_space`
+
+- **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses.
+- **Type:** `list(string)`
+- **Default:** `["10.1.0.0/16"]`
+
+
 ## Usage
 
 ### Initialization
 
-Before using the networking module, ensure that Terraform is installed. Navigate to the `networking-module` directory and run the following command to initialize the Terraform configuration:
+Before using the networking module, ensure that Terraform is installed. 
+
+Navigate to the `networking-module` directory and run the following command to initialize the Terraform configuration:
 
 ```bash
 terraform init
 ```
 
-# AKS Cluster Module Documentation
+## AKS Cluster Module Documentation
 
 This commit also includes updates to the AKS cluster module. The following changes were made:
 
@@ -60,17 +310,248 @@ In the cluster module, I implemented the provisioning of an AKS cluster using In
 
 Input variables for customizing the AKS cluster and output variables capturing essential information, such as the cluster name, ID, and Kubernetes configuration, were defined in the variables.tf and outputs.tf files, respectively.
 
-initialize the Terraform configuration:
+## Files
 
-```bash
-terraform init
-```
+The terraform configuration has 3 files:
+
+ - variables.tf
+ - main.tf
+ - outputs.tf
+
+## aks-cluster/variables.tf
+
+### aks_cluster_name
+- **Purpose:** The name of the AKS cluster.
+- **Description:** The name that will be assigned to the AKS cluster.
+- **Type:** String
+- **Default:** "myakscluster"
+
+### cluster_location
+- **Purpose:** Azure region for AKS cluster deployment.
+- **Description:** The Azure region where the AKS cluster will be deployed.
+- **Type:** String
+- **Default:** "UK South"
+
+### dns_prefix
+- **Purpose:** DNS prefix for AKS cluster.
+- **Description:** The DNS prefix for the AKS cluster, which is used to create the fully qualified domain name (FQDN).
+- **Type:** String
+- **Default:** "myaksclusterdns"
+
+### kubernetes_version
+- **Purpose:** Kubernetes version for AKS cluster.
+- **Description:** The version of Kubernetes to use for the AKS cluster.
+- **Type:** String
+- **Default:** "1.28.3"
+
+### service_principal_client_id
+- **Purpose:** Client ID of Azure AD service principal for AKS cluster.
+- **Description:** The client ID of the Azure AD service principal for the AKS cluster.
+- **Type:** String
+- **Default:** "your-service-principal-client-id"
+
+### service_principal_client_secret
+- **Purpose:** Client secret of Azure AD service principal for AKS cluster.
+- **Description:** The client secret of the Azure AD service principal for the AKS cluster.
+- **Type:** String
+- **Default:** "your-service-principal-client-secret"
+
+
+## Input variables from the networking module
+
+### vnet_id
+- **Purpose:** ID of Virtual Network (VNet) for AKS.
+- **Description:** ID of the Virtual Network (VNet) that the AKS cluster will use.
+- **Type:** String
+
+### control_plane_subnet_id
+- **Purpose:** ID of control plane subnet for AKS.
+- **Description:** ID of the subnet reserved for the AKS control plane.
+- **Type:** String
+
+### worker_node_subnet_id
+- **Purpose:** ID of worker node subnet for AKS.
+- **Description:** ID of the subnet reserved for AKS worker nodes.
+- **Type:** String
+
+### resource_group_name
+- **Purpose:** Name of Azure Resource Group for networking resources.
+- **Description:** Name of the Azure Resource Group for networking resources.
+- **Type:** String
+- **Default:** "aks-rg"
+
+### aks_nsg_id
+- **Purpose:** ID of Network Security Group (NSG) for AKS.
+- **Description:** ID of the Network Security Group (NSG) for AKS, used for controlling inbound and outbound traffic.
+- **Type:** String
+
+# aks-cluster/main.tf
+
+This file defines the Terraform resource to create an Azure Kubernetes Service (AKS) cluster.
+
+### azurerm_kubernetes_cluster
+- **Purpose:** Create an AKS cluster on Azure.
+- **Description:** This Terraform resource block defines the configuration for an AKS cluster, specifying attributes such as name, location, resource group, DNS prefix, Kubernetes version, and more.
+
+#### Attributes:
+- **name:**
+   - **Purpose:** Name of the AKS cluster.
+   - **Description:** The user-defined name that will be assigned to the AKS cluster.
+
+- **location:**
+   - **Purpose:** Azure region for AKS cluster deployment.
+   - **Description:** The Azure region where the AKS cluster will be deployed.
+
+- **resource_group_name:**
+   - **Purpose:** Resource Group for AKS cluster.
+   - **Description:** The name of the Azure Resource Group where the AKS cluster will be created.
+
+- **dns_prefix:**
+   - **Purpose:** DNS prefix for AKS cluster.
+   - **Description:** The DNS prefix for the AKS cluster, which is used to create the fully qualified domain name (FQDN).
+
+- **kubernetes_version:**
+   - **Purpose:** Kubernetes version for AKS cluster.
+   - **Description:** The version of Kubernetes to use for the AKS cluster.
+
+#### Node Pool Configuration:
+- **default_node_pool:**
+   - **name:**
+      - **Purpose:** Name of the default node pool.
+      - **Description:** The name assigned to the default node pool.
+   - **node_count:**
+      - **Purpose:** Number of nodes in the default node pool.
+      - **Description:** The number of nodes in the default node pool.
+   - **vm_size:**
+      - **Purpose:** Size of VMs in the default node pool.
+      - **Description:** The size of virtual machines in the default node pool.
+   - **enable_auto_scaling:**
+      - **Purpose:** Enable auto-scaling for the default node pool.
+      - **Description:** Whether auto-scaling is enabled for the default node pool.
+   - **min_count:**
+      - **Purpose:** Minimum number of nodes in the default node pool.
+      - **Description:** The minimum number of nodes in the default node pool.
+   - **max_count:**
+      - **Purpose:** Maximum number of nodes in the default node pool.
+      - **Description:** The maximum number of nodes in the default node pool.
+
+#### Service Principal Configuration:
+- **service_principal:**
+   - **client_id:**
+      - **Purpose:** Client ID of Azure AD service principal for AKS cluster.
+      - **Description:** The client ID of the Azure AD service principal for the AKS cluster.
+   - **client_secret:**
+      - **Purpose:** Client secret of Azure AD service principal for AKS cluster.
+      - **Description:** The client secret of the Azure AD service principal for the AKS cluster.
+
+## aks-cluster/outputs.tf
+
+This file defines Terraform outputs for retrieving information about the created Azure Kubernetes Service (AKS) cluster.
+
+### aks_cluster_name
+- **Purpose:** AKS cluster name output.
+- **Description:** Outputs the name of the AKS cluster created by Terraform.
+
+### aks_cluster_id
+- **Purpose:** AKS cluster ID output.
+- **Description:** Outputs the unique identifier (ID) of the AKS cluster created by Terraform.
+
+### aks_kubeconfig
+- **Purpose:** AKS cluster kubeconfig output.
+- **Description:** Outputs the kubeconfig file for accessing the AKS cluster. The kubeconfig file contains the necessary information to connect to the AKS cluster using tools like `kubectl`.
+
+
+### Initialization
+
+Before using the networking module, ensure that Terraform is installed. 
+
+Navigate to the `aks-cluster-module` directory and run the following command to initialize the Terraform configuration:
 
 ## Issues encountered
 
 I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
 
 After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
+
+---
+---
+
+## Creation of the AKS Cluster
+
+After setting up the networking module and AKS cluster module, it is time to move on to the creation of the cluster.
+
+This step requires two files:
+- main.tf
+- variables.tf
+
+# main.tf
+
+**purpose**: This Terraform configuration specifies the required provider (Azure) and its version.
+
+```hcl
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+```
+
+**purpose**: Configuration for the Azure provider with necessary authentication details.
+
+```hcl
+provider "azurerm" {
+  features {}
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = "a79df85c-a45e-42a2-a339-c88a5a4f2849"
+  tenant_id       = "47d4542c-f112-47f4-92c7-a838d8a5e8ef"
+}
+```
+
+**purpose**: Networking module instantiation for creating network resources.
+
+```hcl
+module "networking" {
+  source = "./networking-module"
+
+  #### Input variables for the networking module
+  resource_group_name = "aks-rg"
+  location           = "UK South"
+  vnet_address_space = ["10.0.0.0/16"]
+}
+```
+
+**purpose**: AKS Cluster module instantiation for creating Azure Kubernetes Service.
+
+```hcl
+module "aks_cluster" {
+  source = "./aks-cluster-module"
+
+  # Input variables for the AKS cluster module
+
+  aks_cluster_name           = "terraform-aks-cluster"
+  cluster_location           = "UK South"
+  dns_prefix                 = "myaks-project"
+  kubernetes_version         = "1.26.6"  # Adjust the version as needed
+  service_principal_client_id = var.client_id
+  service_principal_client_secret = var.client_secret
+
+  # Input variables referencing outputs from the networking module
+
+  resource_group_name         = module.networking.resource_group_name
+  vnet_id                     = module.networking.vnet_id
+  control_plane_subnet_id     = module.networking.control_plane_subnet_id
+  worker_node_subnet_id       = module.networking.worker_node_subnet_id
+  aks_nsg_id                  = module.networking.aks_nsg_id
+}
+```
+
+## variables.tf
+
+was used to add as the clinet secret, 'clinet_id' and 'client_secret'
 
 # Kubernetes Deployment Documentation
 
@@ -176,7 +657,7 @@ This document provides comprehensive information about the Continuous Integratio
 
 Forgot to set up your pipeline to have the agents that will be used to run the jobs. Oversight was pointed out to me when trying to build the pipeline.
 
-Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error but was frustrating at the time.
+Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error, but was frustrating at the time.
 
 ---
 # AKS Cluster Monitoring Documentation
@@ -241,3 +722,61 @@ By implementing these monitoring and alerting configurations, the AKS cluster is
 ---
 
 # AKS integration with Azure Key Vault
+
+## Introduction
+
+The 'app.py' has hard coded the information needed to connect to the Azure SQL backend surver. This provides security risks, using Azure Key Vault, i can make these into 'secrets' which allows for security when pushing to the cloud.
+
+## Creating an Azure Key Vault
+
+By going onto the Azure portal, I easily created my key 'finalkeyy' (Weird name because other were taken in sof delete). I proceeded to add 4 secrets that were hardcoded to 'app.py'. After assigning the key Vault Administrator roll to my Microsoft Entra ID which ...
+
+- Server name
+- Server username
+- Server Password
+- Database name
+
+then assigned the Key Vault Secrets Officer role to the managed identity associated with AKS, allowing it to retrieve and manage secrets.
+
+## Update the application code
+
+Integrate the Azure Identity and Azure Key Vault libraries into the Python application code to facilitate communication with Azure Key Vault. Modify the code to use managed identity credentials, ensuring secure retrieval of database connection details from the Key Vault.
+
+This was done using the following format:
+
+### Import necessary libraries
+from azure.identity import ManagedIdentityCredential
+from azure.keyvault.secrets import SecretClient
+
+### Replace these values with your Key Vault details
+key_vault_url = "https://your-key-vault-name.vault.azure.net/"
+
+### Set up Azure Key Vault client with Managed Identity
+credential = ManagedIdentityCredential()
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+
+### Access the secret values from Key Vault
+secret = secret_client.get_secret("secret-name")
+
+### Retrieve the secret values
+secret_value = secret.value
+
+and adding the correct depndancies to the requiremnts.txt file:
+
+1. **azure-identity==1.15.0**
+2. **azure-keyvault-secrets==4.7.0**
+
+# Testing 
+
+by adding a new feature I wanted to see if the pipeline would integrate it seemlessly.
+
+#test feature to see if the pipeline works properly
+@app.route('/health')
+def health_check():
+    return 'It workssss'
+
+by port forwarding on one of my pods, accessing http://localhost:8080/health returned the 'It workssss' message showing me that there was a seamless integration with Azure Key Vault.
+
+## Issues
+
+Understanding that the azure devops service pipeline didnt pop up with every push to github was hard to get my head around at first. I now understand that it still updates just does not show up only with specific changes...
