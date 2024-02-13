@@ -594,7 +594,7 @@ then putting the terraform and state files into my .gitignore to not leak sensit
 
 ## Issues encountered
 
-I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
+I was having problems configuring my terraform files and couldn't make sense of it, so I choose to start over. Following the same process I worked.
 
 After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
 
@@ -709,13 +709,14 @@ Forgot to set up your pipeline to have the agents that will be used to run the j
 Instead of usidng 'dockerfile' I used 'Dockerfile' when builiding the CI pipeline. Silly error, but was frustrating at the time.
 
 ---
-# AKS Cluster Monitoring Documentation
+---
+## AKS Cluster Monitoring Documentation
 
-## Overview
+### Overview
 
 This documentation outlines the steps taken to establish effective monitoring and alerting for an Azure Kubernetes Service (AKS) cluster. Proper monitoring is essential for ensuring the optimal performance, resource allocation, and stability of the AKS environment.
 
-## Metrics Explorer Configuration
+### Metrics Explorer Configuration
 
 After enabling container insights, the following charts were created in the Metrics Explorer to provide a comprehensive overview of the AKS cluster's performance:
 
@@ -750,9 +751,9 @@ Log Analytics was configured to capture detailed information for more in-depth a
 5. **Monitoring Kubernetes Events:**
    - *Purpose:* Monitor Kubernetes events, including pod scheduling, scaling activities, and errors, to ensure overall cluster health and stability.
 
-## Alert Rule Configuration
+### Alert Rule Configuration
 
-### Disk Usage Alert
+#### Disk Usage Alert
 
 - **Objective:** Trigger an alarm when the used disk percentage in the AKS cluster exceeds 90%.
 - **Frequency:** Check every 5 minutes.
@@ -769,14 +770,15 @@ Log Analytics was configured to capture detailed information for more in-depth a
 By implementing these monitoring and alerting configurations, the AKS cluster is equipped to maintain optimal performance and respond promptly to potential issues.
 
 ---
+---
 
-# AKS integration with Azure Key Vault
+## AKS integration with Azure Key Vault
 
-## Introduction
+### Introduction
 
 The 'app.py' has hard coded the information needed to connect to the Azure SQL backend surver. This provides security risks, using Azure Key Vault, i can make these into 'secrets' which allows for security when pushing to the cloud.
 
-## Creating an Azure Key Vault
+### Creating an Azure Key Vault
 
 By going onto the Azure portal, I easily created my key 'finalkeyy' (Weird name choice but everything reasonable I put was 'taken in soft delete'). I proceeded to add the four secrets that were hardcoded to 'app.py' onto my key. 
 
@@ -804,27 +806,27 @@ az role assignment create --role "Key Vault Secrets Officer" \
   --scope /subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.KeyVault/vaults/{key-vault-name}
   ```
 
-## Update the application code
+### Update the application code
 
 Integrate the Azure Identity and Azure Key Vault libraries into the Python application code to facilitate communication with Azure Key Vault. Modify the code to use managed identity credentials, ensuring secure retrieval of database connection details from the Key Vault.
 
 This was done using the following format:
 
-### Import necessary libraries
+#### Import necessary libraries
 from azure.identity import ManagedIdentityCredential
 from azure.keyvault.secrets import SecretClient
 
-### Replace these values with your Key Vault details
+#### Replace these values with your Key Vault details
 key_vault_url = "https://your-key-vault-name.vault.azure.net/"
 
-### Set up Azure Key Vault client with Managed Identity
+#### Set up Azure Key Vault client with Managed Identity
 credential = ManagedIdentityCredential()
 secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
-### Access the secret values from Key Vault
+#### Access the secret values from Key Vault
 secret = secret_client.get_secret("secret-name")
 
-### Retrieve the secret values
+#### Retrieve the secret values
 secret_value = secret.value
 
 ```bash
