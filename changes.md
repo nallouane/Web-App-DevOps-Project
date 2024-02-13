@@ -147,10 +147,11 @@ The following steps outline how to build a Docker image for your application:
 
 **Remove Images**: List all images using ```docker images -a``` and remove any unneeded images with ```docker rmi <image-id>``` to reclaim disk space
 
-
+---
+---
 ## Networking Module Documentation
 
-This repository contains Terraform code for defining networking services as part of an Infrastructure as Code (IaC) approach.
+This section contains Terraform code for defining networking services as part of an Infrastructure as Code (IaC) approach.
 
 Started by creating a new directory, 'aks-terraform', and inside that creating a 'networking-module'.
 
