@@ -290,7 +290,7 @@ resource "azurerm_network_security_rule" "ssh" {
 ## networking-module/outputs.tf
 
 ### Purpose
-This file defines Terraform outputs for retrieving information about the networking resources created by the networking module.
+This configuration file outputs certain networking resources created by the networking module.
 
 ### vnet_id
 - **Purpose:** Virtual Network (VNet) ID output.
