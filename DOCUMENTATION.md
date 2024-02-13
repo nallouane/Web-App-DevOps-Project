@@ -52,7 +52,7 @@ By using docker, I containerized the application, allowing for distribution to d
      ```
 
 4. **Running Commands:**
-   - The `RUN` instruction executes commands inside the container during the image build process. This is used to install dependencies, set up the environment, or perform other tasks. This was used to install system dependencies and and ODBC driver:
+   - The `RUN` instruction executes commands inside the container during the image build process. This is used to install dependencies, set up the environment, or perform other tasks. This was used to install system dependencies and the ODBC driver:
      ```dockerfile
      RUN apt-get update && apt-get install -y \
          unixodbc unixodbc-dev odbcinst odbcinst1debian2 libpq-dev gcc && \
@@ -108,10 +108,10 @@ The following steps outline how to build a Docker image for your application:
    -Use the docker build command to build the Docker image. Specify the path to the directory containing the Dockerfile using the dot (.) if the Dockerfile is in the current directory.
 
    ```bash
-   docker build -t myapp:latest .   
+   docker build -t myimage:latest .   
    ```
 
-   The -t flag is used to tag the image, and myapp:latest is an example tag for your image. Adjust the tag according to your project naming conventions.
+   The -t flag is used to tag the image, and myimage:latest is an example tag for your image. Adjust the tag according to your project naming conventions.
 
    As Docker builds the image, it executes each instruction in the Dockerfile. You'll see output indicating the progress of each step. Pay attention to any error messages or warnings.
 
@@ -125,7 +125,7 @@ The following steps outline how to build a Docker image for your application:
    Run a Docker container locally to ensure the application functions correctly within the containerized environment.
 
 
-   Execute the following command to initiate the Docker container: docker run -p 5000:5000 <name of the image>. This maps port 500 from your local machine to the container, enabling access to the containerized application from your local development environment.
+   Execute the following command to initiate the Docker container: docker run -p 5000:5000 myimage. This maps port 500 from your local machine to the container, enabling access to the containerized application from your local development environment.
 
 
    Open a web browser and go to http://127.0.0.1:5000 to interact with the application within the Docker container. Confirm the application works as expected by testing its functionality within the containerized environment.
