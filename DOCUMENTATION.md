@@ -95,13 +95,13 @@ By using docker, I containerized the application, allowing for distribution to d
 
 ## Docker Build
 
-The following steps outline how to build a Docker image for your application:
+The following steps outline how to build a Docker image for my application:
 
 1. **Navigate to the Project Directory:**
    - Open a terminal and change your working directory to the root of your project where the Dockerfile is located.
 
    ```bash
-   cd /path/to/your/project
+   cd ./aaproject/Web-App-DevOps-Project
    ```
 
 2. **Build the Docker Image**
@@ -111,7 +111,7 @@ The following steps outline how to build a Docker image for your application:
    docker build -t myimage:latest .   
    ```
 
-   The -t flag is used to tag the image, and myimage:latest is an example tag for your image. Adjust the tag according to your project naming conventions.
+   The -t flag is used to tag the image. Adjust the tag according to your project naming conventions.
 
    As Docker builds the image, it executes each instruction in the Dockerfile. You'll see output indicating the progress of each step. Pay attention to any error messages or warnings.
 
