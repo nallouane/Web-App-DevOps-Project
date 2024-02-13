@@ -836,13 +836,19 @@ and adding the correct depndancies to the requiremnts.txt file:
 
 by adding a new feature I wanted to see if the pipeline would integrate it seemlessly.
 
+```bash
 #test feature to see if the pipeline works properly
 @app.route('/health')
 def health_check():
     return 'It workssss'
+```
 
-by port forwarding on one of my pods, accessing http://localhost:8080/health returned the 'It workssss' message showing me that there was a seamless integration with Azure Key Vault.
+by port forwarding on one of my pods, accessing http://localhost:8080/health returned the 'It workssss' message, showing me that there was a seamless integration with Azure Key Vault.
 
 ## Issues
 
 Understanding that the azure devops service pipeline didnt pop up with every push to github was hard to get my head around at first. I now understand that it still updates just does not show up only with specific changes.
+
+---
+---
+---
