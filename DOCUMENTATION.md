@@ -25,7 +25,7 @@ Upon further consideration and feedback, it was determined that the introduction
 git revert <commit_hash_of_feature_branch>
 ```
 
-# Docker Containerization Process
+## Docker Containerization Process
 
 ## Introduction
 
@@ -197,10 +197,6 @@ The terraform configuration has 3 files:
 
 ## networking-module/main.tf
 
-### Overview
-
-This Terraform configuration defines networking resources for an Azure Kubernetes Service (AKS) cluster. It creates an Azure Resource Group, a Virtual Network (VNet), and associated subnets. Additionally, it sets up a Network Security Group (NSG) with rules to control inbound traffic to the AKS cluster.
-
 ## Resources Created
 
 1. **Azure Resource Group**
@@ -292,9 +288,9 @@ resource "azurerm_network_security_rule" "ssh" {
 }
 ```
 
-# networking-module/outputs.tf
+## networking-module/outputs.tf
 
-## Purpose
+### Purpose
 This file defines Terraform outputs for retrieving information about the networking resources created by the networking module.
 
 ### vnet_id
