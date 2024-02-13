@@ -457,15 +457,6 @@ Navigate to the `aks-cluster-module` directory and run the following command to 
    terraform init
    ```
 
-## Issues encountered
-
-I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
-
-After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
-
----
----
-
 ## Creation of the AKS Cluster
 
 After setting up the networking module and AKS cluster module, it is time to move on to the creation of the cluster.
@@ -558,6 +549,14 @@ then putting the terraform and state files into my .gitignore to not leak sensit
    *terraform.tfstate
 ```
 
+## Issues encountered
+
+I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
+
+After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
+
+---
+---
 
 # Kubernetes Deployment Documentation
 
