@@ -130,6 +130,8 @@ The following steps outline how to build a Docker image for your application:
 
 This repository contains Terraform code for defining networking services as part of an Infrastructure as Code (IaC) approach.
 
+Started by creating a new directory, 'aks-terraform', and inside that creating a 'networking-module'.
+
 ## Overview
 
 The networking module is designed to create essential networking resources needed for an Azure Kubernetes Service (AKS) cluster. These resources include:
@@ -304,6 +306,8 @@ This commit also includes updates to the AKS cluster module. The following chang
 
 In the cluster module, I implemented the provisioning of an AKS cluster using Infrastructure as Code (IaC). The necessary Azure resources, including the AKS cluster, node pool, and service principal, were defined in the main.tf file.
 
+Start by creating a new module 'aks-cluster-module' inside the 'aks-terraform' directory.
+
 ## Input and Output Variables
 
 Input variables for customizing the AKS cluster and output variables capturing essential information, such as the cluster name, ID, and Kubernetes configuration, were defined in the variables.tf and outputs.tf files, respectively.
@@ -355,7 +359,7 @@ The terraform configuration has 3 files:
 - **Default:** "your-service-principal-client-secret"
 
 
-## Input variables from the networking module
+**Input variables from the networking module**
 
 ### vnet_id
 - **Purpose:** ID of Virtual Network (VNet) for AKS.
@@ -509,7 +513,7 @@ provider "azurerm" {
 }
 ```
 
-**purpose**: Networking module instantiation for creating network resources.
+**purpose**: Networking module instantiation for creating network resources. 
 
 ```hcl
 module "networking" {
@@ -550,6 +554,22 @@ module "aks_cluster" {
 ## variables.tf
 
 was used to add as the clinet secret, 'clinet_id' and 'client_secret'
+
+After all this, by going into the aks-terraform directory, initialise and apply the terraform configuratio using:
+
+```bash
+   terraform init
+   terrafom apply 
+```
+
+then putting the terraform and state files into my .gitignore to not leak sensitive information:
+
+```bash
+   # Ignore Terraform files in aks-terraform directory
+   *.terraform/
+   *terraform.tfstate
+```
+
 
 # Kubernetes Deployment Documentation
 
