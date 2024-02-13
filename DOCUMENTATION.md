@@ -861,7 +861,7 @@ and adding the correct depndancies to the requiremnts.txt file:
 
 # Testing 
 
-by adding a new feature I wanted to see if the pipeline would integrate it seemlessly.
+By adding a new feature I wanted to see if the pipeline would integrate it seemlessly.
 
 ```bash
 #test feature to see if the pipeline works properly
@@ -870,7 +870,7 @@ def health_check():
     return 'It workssss'
 ```
 
-by port forwarding on one of my pods, accessing http://localhost:8080/health returned the 'It workssss' message, showing me that there was a seamless integration with Azure Key Vault.
+By port forwarding on one of my pods, accessing http://localhost:8080/health returned the 'It workssss' message, showing me that there was a seamless integration with Azure Key Vault.
 
 ## Issues
 
