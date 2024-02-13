@@ -473,6 +473,10 @@ Before using the networking module, ensure that Terraform is installed.
 
 Navigate to the `aks-cluster-module` directory and run the following command to initialize the Terraform configuration:
 
+```bash
+   terraform init
+   ```
+
 ## Issues encountered
 
 I was having problems with my terraform files and i couldn't make sense of it so I choose to redo it.
