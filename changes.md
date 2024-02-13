@@ -391,64 +391,42 @@ The terraform configuration has 3 files:
 - **Description:** ID of the Network Security Group (NSG) for AKS, used for controlling inbound and outbound traffic.
 - **Type:** String
 
-# aks-cluster/main.tf
+## aks-cluster/main.tf
 
-This file defines the Terraform resource to create an Azure Kubernetes Service (AKS) cluster.
+There was one resource in the main.tf file,
 
-### azurerm_kubernetes_cluster
-- **Purpose:** Create an AKS cluster on Azure.
-- **Description:** This Terraform resource block defines the configuration for an AKS cluster, specifying attributes such as name, location, resource group, DNS prefix, Kubernetes version, and more.
+```bash
+   resource "azurerm_kubernetes_cluster" "aks_cluster"
+   ```
 
-#### Attributes:
-- **name:**
-   - **Purpose:** Name of the AKS cluster.
-   - **Description:** The user-defined name that will be assigned to the AKS cluster.
+The follwing are just needed to configure correctly:
 
-- **location:**
-   - **Purpose:** Azure region for AKS cluster deployment.
-   - **Description:** The Azure region where the AKS cluster will be deployed.
+```bash
+  name                = var.aks_cluster_name
+  location            = var.cluster_location
+  resource_group_name = var.resource_group_name
+  dns_prefix          = var.dns_prefix
+  kubernetes_version  = var.kubernetes_version
+```
+The follwing configuration provides flexibility for scaling the default node pool based on the demands of the applications running in the AKS cluster, ensuring efficient resource utilization and responsiveness to varying workloads. Adjustments to parameters such as node count, VM size, and auto-scaling settings can be made according to specific deployment requirements:
 
-- **resource_group_name:**
-   - **Purpose:** Resource Group for AKS cluster.
-   - **Description:** The name of the Azure Resource Group where the AKS cluster will be created.
+```bash
+default_node_pool {
+    name       = "default"
+    node_count = 1
+    vm_size    = "Standard_DS2_v2"
+    enable_auto_scaling = true
+    min_count = 1
+    max_count = 3}
+```
 
-- **dns_prefix:**
-   - **Purpose:** DNS prefix for AKS cluster.
-   - **Description:** The DNS prefix for the AKS cluster, which is used to create the fully qualified domain name (FQDN).
+Finally, the service principal authenticates the connection to the cluster
 
-- **kubernetes_version:**
-   - **Purpose:** Kubernetes version for AKS cluster.
-   - **Description:** The version of Kubernetes to use for the AKS cluster.
-
-#### Node Pool Configuration:
-- **default_node_pool:**
-   - **name:**
-      - **Purpose:** Name of the default node pool.
-      - **Description:** The name assigned to the default node pool.
-   - **node_count:**
-      - **Purpose:** Number of nodes in the default node pool.
-      - **Description:** The number of nodes in the default node pool.
-   - **vm_size:**
-      - **Purpose:** Size of VMs in the default node pool.
-      - **Description:** The size of virtual machines in the default node pool.
-   - **enable_auto_scaling:**
-      - **Purpose:** Enable auto-scaling for the default node pool.
-      - **Description:** Whether auto-scaling is enabled for the default node pool.
-   - **min_count:**
-      - **Purpose:** Minimum number of nodes in the default node pool.
-      - **Description:** The minimum number of nodes in the default node pool.
-   - **max_count:**
-      - **Purpose:** Maximum number of nodes in the default node pool.
-      - **Description:** The maximum number of nodes in the default node pool.
-
-#### Service Principal Configuration:
-- **service_principal:**
-   - **client_id:**
-      - **Purpose:** Client ID of Azure AD service principal for AKS cluster.
-      - **Description:** The client ID of the Azure AD service principal for the AKS cluster.
-   - **client_secret:**
-      - **Purpose:** Client secret of Azure AD service principal for AKS cluster.
-      - **Description:** The client secret of the Azure AD service principal for the AKS cluster.
+```bash
+service_principal {
+    client_id     = var.service_principal_client_id
+    client_secret = var.service_principal_client_secret}
+```
 
 ## aks-cluster/outputs.tf
 
