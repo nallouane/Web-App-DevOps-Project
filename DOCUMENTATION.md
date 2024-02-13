@@ -111,36 +111,34 @@ The following steps outline how to build a Docker image for my application:
    docker build -t myimage:latest .   
    ```
 
-   The -t flag is used to tag the image. Adjust the tag according to your project naming conventions.
+   The -t flag is used to tag the image.
 
-   As Docker builds the image, it executes each instruction in the Dockerfile. You'll see output indicating the progress of each step. Pay attention to any error messages or warnings.
+   As Docker builds the image, it executes each instruction in the Dockerfile. One can see output indicating the progress of each step, displaying any error messages or warnings.
 
-   Once the build is complete, you can verify that the image has been created by listing all Docker images on your system.
+   Once the build is complete, verifying that the image has been created was done by listing all Docker images on the system.
 
    ```bash
    docker images
    ```
 3. **Run the image locally**
 
-   Run a Docker container locally to ensure the application functions correctly within the containerized environment.
+   Running a Docker container locally ensures the application functions correctly within the containerized environment, I followed this process:
 
-
-   Execute the following command to initiate the Docker container: docker run -p 5000:5000 myimage. This maps port 500 from your local machine to the container, enabling access to the containerized application from your local development environment.
-
+   Execute the following command to initiate the Docker container: docker run -p 5000:5000 myimage. This maps port 5000 from your local machine to the container, enabling access to the containerized application from your local development environment.
 
    Open a web browser and go to http://127.0.0.1:5000 to interact with the application within the Docker container. Confirm the application works as expected by testing its functionality within the containerized environment.
 
 
 4. **Push to Docker Hub**
 
-   Finally pushed the image to dockerhub:
+   Finally, pushing the image to dockerhub:
 
    ```bash   
    docker login
    docker tag <name of the image> <docker-hub-username>/<image-name>:<tag>.
    ```
 
-   Log in to your Docker Hub account if you're not already logged in. Confirm that your Docker image is listed within your repository. You should be able to see the image's name, version (tag), and other relevant information.
+   When this process finished, I logged onto my Docker Hub account and confirm that the relevant docker image was listed the Docker Hub repository. Following this process one should be able to see the image's name, version (tag), and other relevant information.
 
 
 ## Clean Up
@@ -155,7 +153,7 @@ The following steps outline how to build a Docker image for my application:
 
 This section contains Terraform code for defining networking services as part of an Infrastructure as Code (IaC) approach.
 
-Started by creating a new directory, 'aks-terraform', and inside that creating a 'networking-module'.
+Started by creating a new directory, 'aks-terraform', and inside that creating a 'networking-module' directory.
 
 ## Overview
 
