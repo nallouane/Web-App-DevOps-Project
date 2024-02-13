@@ -755,14 +755,31 @@ The 'app.py' has hard coded the information needed to connect to the Azure SQL b
 
 ## Creating an Azure Key Vault
 
-By going onto the Azure portal, I easily created my key 'finalkeyy' (Weird name because other were taken in sof delete). I proceeded to add 4 secrets that were hardcoded to 'app.py'. After assigning the key Vault Administrator roll to my Microsoft Entra ID which ...
+By going onto the Azure portal, I easily created my key 'finalkeyy' (Weird name choice but everything reasonable I put was 'taken in soft delete'). I proceeded to add the four secrets that were hardcoded to 'app.py' onto my key. 
 
 - Server name
 - Server username
 - Server Password
 - Database name
 
+by using the following command i created and assigned the key Vault Administrator roll to a User-assigned Managed Identity.
+
+```bash
+   # Create a user-assigned managed identity
+   az identity create -g myResourceGroup -n myUserAssignedIdentity
+   az aks update --resource-group <resource-group> --name <aks-cluster-name> --enable-managed-identity
+   az aks show --resource-group <resource-group> --name <aks-cluster-name> --query identityProfile
+
+   ```
+
 then assigned the Key Vault Secrets Officer role to the managed identity associated with AKS, allowing it to retrieve and manage secrets.
+
+```bash
+   # Assign "Key Vault Secrets Officer" role to Managed Identity
+az role assignment create --role "Key Vault Secrets Officer" \
+  --assignee <managed-identity-client-id> \
+  --scope /subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.KeyVault/vaults/{key-vault-name}
+  ```
 
 ## Update the application code
 
@@ -787,6 +804,29 @@ secret = secret_client.get_secret("secret-name")
 ### Retrieve the secret values
 secret_value = secret.value
 
+```bash
+   # Replace these values with your Key Vault details
+key_vault_name = "finalkeyy"
+key_vault_url = f"https://{key_vault_name}.vault.azure.net/"
+
+# Set up Azure Key Vault client with Managed Identity
+credential = ManagedIdentityCredential()
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+
+# Access the secret values from Key Vault
+server_name = secret_client.get_secret("server-name").value
+server_username = secret_client.get_secret("server-username").value
+server_password = secret_client.get_secret("server-password").value
+database_name = secret_client.get_secret("database-name").value
+
+# database connection 
+server = server_name
+database = database_name
+username = server_username
+password = server_password
+driver= '{ODBC Driver 18 for SQL Server}'
+```
+
 and adding the correct depndancies to the requiremnts.txt file:
 
 1. **azure-identity==1.15.0**
@@ -805,4 +845,4 @@ by port forwarding on one of my pods, accessing http://localhost:8080/health ret
 
 ## Issues
 
-Understanding that the azure devops service pipeline didnt pop up with every push to github was hard to get my head around at first. I now understand that it still updates just does not show up only with specific changes...
+Understanding that the azure devops service pipeline didnt pop up with every push to github was hard to get my head around at first. I now understand that it still updates just does not show up only with specific changes.
