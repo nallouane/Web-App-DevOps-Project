@@ -865,16 +865,27 @@ By implementing these monitoring and alerting configurations, the AKS cluster is
 
 ### Introduction
 
-The 'app.py' has hard coded the information needed to connect to the Azure SQL backend surver. This provides security risks, using Azure Key Vault, i can make these into 'secrets' which allows for security when pushing to the cloud.
+The 'app.py' has hard coded the information needed to connect to the Azure SQL backend surver. This provides security risks, using Azure Key Vault, these values can be made into 'secrets' which allows for security when pushing to the cloud.
 
 ### Creating an Azure Key Vault
 
 By going onto the Azure portal, I easily created my key 'finalkeyy' (Weird name choice but everything reasonable I put was 'taken in soft delete'). I proceeded to add the four secrets that were hardcoded to 'app.py' onto my key. 
 
-- Server name
-- Server username
-- Server Password
-- Database name
+- `Server name`
+
+   Represents the server or host where your database is hosted.
+
+- `Server username`
+
+   Represents the username used to authenticate to the database server.
+
+- `Server Password`
+
+   Represents the password used to authenticate to the database server.
+
+- `Database name`
+
+   Specifies the name of the database the application should connect to.
 
 by using the following command i created and assigned the key Vault Administrator roll to a User-assigned Managed Identity.
 
