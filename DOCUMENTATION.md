@@ -139,7 +139,7 @@ The following steps outline how to build a Docker image for my application:
    docker push <docker-hub-username>/<image-name>:<tag>
    ```
 
-   When this process finished, I logged onto my Docker Hub account and confirm that the relevant docker image was listed the Docker Hub repository. Following this process one should be able to see the image's name, version (tag), and other relevant information.
+   When this process finished, I logged onto my Docker Hub repository and confirmed that the relevant docker image was listed. Following this process, one should be able to see the image's name, version (tag), and other relevant information.
 
 
 ## Clean Up
