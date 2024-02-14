@@ -111,7 +111,7 @@ The following steps outline how to build a Docker image for my application:
    docker build -t myimage:latest .   
    ```
 
-   The -t flag is used to tag the image.
+   The `-t` flag is used to tag the image.
 
    As Docker builds the image, it executes each instruction in the Dockerfile. One can see output indicating the progress of each step, displaying any error messages or warnings.
 
@@ -124,9 +124,9 @@ The following steps outline how to build a Docker image for my application:
 
    Running a Docker container locally ensures the application functions correctly within the containerized environment, I followed this process:
 
-   Execute the following command to initiate the Docker container: docker run -p 5000:5000 myimage. This maps port 5000 from your local machine to the container, enabling access to the containerized application from your local development environment.
+   Execute the following command to initiate the Docker container: `docker run -p 5000:5000 myimage`. This maps port 5000 from your local machine to the container, enabling access to the containerized application from your local development environment.
 
-   Open a web browser and go to http://127.0.0.1:5000 to interact with the application within the Docker container. Confirm the application works as expected by testing its functionality within the containerized environment.
+   Open a web browser and go to `http://127.0.0.1:5000` to interact with the application within the Docker container. Confirm the application works as expected by testing its functionality within the containerized environment.
 
 
 4. **Push to Docker Hub**
@@ -144,9 +144,9 @@ The following steps outline how to build a Docker image for my application:
 
 ## Clean Up
 
-**Remove Containers**: Use the ```docker ps -a command``` to list all containers, including stopped ones. Remove any unnecessary containers with ```docker rm <container-id>``` to free up resources.
+**Remove Containers**: Use the `docker ps -a command` to list all containers, including stopped ones. Remove any unnecessary containers with `docker rm <container-id>` to free up resources.
 
-**Remove Images**: List all images using ```docker images -a``` and remove any unneeded images with ```docker rmi <image-id>``` to reclaim disk space
+**Remove Images**: List all images using `docker images -a` and remove any unneeded images with `docker rmi <image-id>` to reclaim disk space
 
 ---
 ---
@@ -170,9 +170,9 @@ The networking module is designed to create essential networking resources neede
 
 The terraform configuration has 3 files:
 
- - variables.tf
- - main.tf
- - outputs.tf
+ - `variables.tf`
+ - `main.tf`
+ - `outputs.tf`
 
 ## networking-module/variables.tf
 
@@ -314,9 +314,7 @@ This configuration file outputs certain networking resources created by the netw
 
 ### Initialization
 
-Before using the networking module, ensure that Terraform is installed. 
-
-Navigate to the `networking-module` directory and run the following command to initialize the Terraform configuration:
+Ensuring first that `Terraform` is installed, navigate to the `networking-module` directory and run the following command to initialize the Terraform configuration:
 
 ```bash
 terraform init
@@ -328,7 +326,7 @@ terraform init
 
 In the cluster module, I implemented the provisioning of an AKS cluster using Infrastructure as Code (IaC). The necessary Azure resources, including the AKS cluster, node pool, and service principal, were defined in the main.tf file.
 
-Creating a new directroy 'aks-cluster-module' inside the 'aks-terraform' directory.
+Creating a new directroy `aks-cluster-module` inside the `aks-terraform` directory.
 
 ## Input and Output Variables
 
@@ -338,9 +336,9 @@ Input variables for customizing the AKS cluster and output variables capturing e
 
 The terraform configuration has 3 files:
 
- - variables.tf
- - main.tf
- - outputs.tf
+ - `variables.tf`
+ - `main.tf`
+ - `outputs.tf`
 
 ## aks-cluster/variables.tf
 
@@ -469,8 +467,6 @@ This configuration file outputs information about the created Azure Kubernetes S
 
 ### Initialization
 
-Before using the networking module, ensure that Terraform is installed. 
-
 Navigate to the `aks-cluster-module` directory and run the following command to initialize the Terraform configuration:
 
 ```bash
@@ -482,8 +478,8 @@ Navigate to the `aks-cluster-module` directory and run the following command to 
 After setting up the networking module and AKS cluster module, it is time to move on to the creation of the cluster.
 
 This step requires two files:
-- main.tf
-- variables.tf
+- `main.tf`
+- `variables.tf`
 
 ## main.tf
 
@@ -552,7 +548,7 @@ module "aks_cluster" {
 
 ## variables.tf
 
-This configuration file is just to add as the clinet secret, 'clinet_id' and 'client_secret':
+This configuration file is just to add as the clinet secret, `clinet_id` and `client_secret`:
 
 ```bash
    # variables.tf
