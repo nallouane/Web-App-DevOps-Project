@@ -733,17 +733,22 @@ After enabling container insights, the following charts were created in the Metr
 
 1. **Average Node CPU Usage:**
    - *Purpose:* Track CPU usage of AKS cluster nodes for efficient resource allocation and performance issue detection.
+   -  *Interpretation*: A higher percentage indicates higher CPU usage. Regularly check this to optimize resources.  
 
 2. **Average Pod Count:**
    - *Purpose:* Display the average number of pods running in the AKS cluster, aiding in capacity evaluation and workload distribution analysis.
+   - *Interpretation*: A sudden increase may indicate increased workload. Monitor to ensure pods are distributed evenly.
+
 
 3. **Used Disk Percentage:**
    - *Purpose:* Monitor disk usage to prevent storage-related issues by tracking the utilized disk space.
+   *Interpretation*: A higher percentage may lead to storage issues. Regularly check and optimize storage.
 
 4. **Bytes Read and Written per Second:**
    - *Purpose:* Monitor data I/O to identify potential performance bottlenecks by providing insights into data transfer rates.
+   - *Interpretation*: Spikes in data transfer rates may indicate performance issues. Monitor for efficient data flow.
 
-   The following is an example screenshot once you set all the charts onto a dashboard:
+   The following screenshot of shows the metrics dashboard, containing all 4 charts:
 
    ![AKS Cluster Metrics](AKS%20cluster%20metrics.png)
 
@@ -754,17 +759,36 @@ Log Analytics was configured to capture detailed information for more in-depth a
 1. **Average Node CPU Usage Percentage per Minute:**
    - *Purpose:* Record granular data on node-level CPU usage, capturing logs per minute for detailed analysis.
 
+   ![Average Nodes CPU Usage](log-Average%20Nodes%20CPU%20Usage.png)
+
 2. **Average Node Memory Usage Percentage per Minute:**
    - *Purpose:* Track node-level memory usage to detect memory-related performance concerns and optimize resource allocation.
+
+   ![Average Node Memory Usage](log-Average%20Node%20Memory%20Usage.png)
+
 
 3. **Pods Counts with Phase:**
    - *Purpose:* Provide information on pod counts with different phases (Pending, Running, Terminating) for workload distribution insights.
 
+   ![Pod Counts with Phase](pod%20counts%20with%20Phase.png)
+
+
 4. **Find Warning Value in Container Logs:**
-   - *Purpose:* Proactively detect issues or errors within containers by configuring Log Analytics to search for warning values in container logs.
+   - *Purpose:* Proactively detect issues or errors within containers by configuring Log Analytics to search for `warning` values in container logs.
+
+   ![Warning Container Logs](warning%20container%20logs.png)
+
 
 5. **Monitoring Kubernetes Events:**
    - *Purpose:* Monitor Kubernetes events, including pod scheduling, scaling activities, and errors, to ensure overall cluster health and stability.
+
+   ![Kubernetes Events](kubernetes%20events.png)
+
+
+In `log analytics`, in the `other` tab, is where all the saved quieries are stored.
+
+![saved queries](saved%20queries.png)
+
 
 ### Alert Rule Configuration
 
