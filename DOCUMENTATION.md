@@ -15,7 +15,7 @@ In this commit, I implemented a feature branch to introduce the `delivery_date` 
    - Incorporated necessary logic to interact with the new data.
 
 2. **order.html**
-   - Updated the HTML template to display and capture the `delivery_date` in the order form.
+   - Updated the HTML template to display and capture the `delivery_date` to the order form.
 
 ### Reversion
 
