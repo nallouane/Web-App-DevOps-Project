@@ -204,7 +204,7 @@ Creates an Azure Resource Group for networking resources.
 
 **Purpose:** Grouping networking resources for easier management.
 
-```hcl
+```yaml
 resource "azurerm_resource_group" "networking" {
   name     = var.resource_group_name
   location = var.location
@@ -215,7 +215,7 @@ resource "azurerm_resource_group" "networking" {
 
 **Purpose**: Providing a dedicated network for the AKS cluster.
 
-```hcl
+```yaml
 resource "azurerm_virtual_network" "aks_vnet" {
   name                = "my_vnet"
   address_space       = var.vnet_address_space
@@ -227,7 +227,7 @@ resource "azurerm_virtual_network" "aks_vnet" {
 
 **Purpose**: Organizing resources and controlling network traffic.
 
-```hcl
+```yaml
 resource "azurerm_subnet" "control_plane_subnet" {
   name                 = "my_control_plane_subnet"
   resource_group_name  = azurerm_resource_group.networking.name
@@ -246,7 +246,7 @@ resource "azurerm_subnet" "worker_node_subnet" {
 
 **Purpose**: Controlling inbound network traffic to the AKS cluster.
 
-```hcl
+```yaml
 resource "azurerm_network_security_group" "aks_nsg" {
   name                = "aks_nsg"
   location            = azurerm_resource_group.networking.location
@@ -257,7 +257,7 @@ resource "azurerm_network_security_group" "aks_nsg" {
 
 **Purpose**: Controlling inbound network traffic to the AKS cluster.
 
-```hcl
+```yaml
 resource "azurerm_network_security_rule" "kube_apiserver" {
   name                        = "my_nsg_rule1"
   priority                    = 1001
@@ -344,7 +344,7 @@ The terraform configuration has 3 files:
 
 The variables.tf allows for proper configuration of the cluster.
 
-```bash
+```yaml
    
 variable "aks_cluster_name" {
   description = "The name of the AKS cluster"
@@ -385,7 +385,7 @@ variable "service_principal_client_secret" {
 
 The next section allows for inputs from the networking-module:
 
-```bash
+```yaml
 # Input variables from the networking module
 
 variable "vnet_id" {
@@ -415,13 +415,13 @@ variable "aks_nsg_id" {
 
 There was one resource in the main.tf file,
 
-```bash
+```yaml
    resource "azurerm_kubernetes_cluster" "aks_cluster"
    ```
 
 The following are just needed to configure correctly:
 
-```bash
+```yaml
   name                = var.aks_cluster_name
   location            = var.cluster_location
   resource_group_name = var.resource_group_name
@@ -430,7 +430,7 @@ The following are just needed to configure correctly:
 ```
 The follwing configuration provides flexibility for scaling the default node pool based on the demands of the applications running in the AKS cluster, ensuring efficient resource utilization and responsiveness to varying workloads. Adjustments to parameters such as node count, VM size, and auto-scaling settings can be made according to specific deployment requirements:
 
-```bash
+```yaml
 default_node_pool {
     name       = "default"
     node_count = 1
@@ -442,7 +442,7 @@ default_node_pool {
 
 Finally, the service principal authenticates the connection to the cluster
 
-```bash
+```yaml
 service_principal {
     client_id     = var.service_principal_client_id
     client_secret = var.service_principal_client_secret}
@@ -485,7 +485,7 @@ This step requires two files:
 
 **purpose**: This Terraform configuration specifies the required provider (Azure) and its version.
 
-```hcl
+```yaml
 terraform {
   required_providers {
     azurerm = {
@@ -498,7 +498,7 @@ terraform {
 
 **purpose**: Configuration for the Azure provider with necessary authentication details.
 
-```hcl
+```yaml
 provider "azurerm" {
   features {}
   client_id       = var.client_id
@@ -510,7 +510,7 @@ provider "azurerm" {
 
 **purpose**: Networking module instantiation for creating network resources. 
 
-```hcl
+```yaml
 module "networking" {
   source = "./networking-module"
 
@@ -523,7 +523,7 @@ module "networking" {
 
 **purpose**: AKS Cluster module instantiation for creating Azure Kubernetes Service.
 
-```hcl
+```yaml
 module "aks_cluster" {
   source = "./aks-cluster-module"
 
@@ -550,7 +550,7 @@ module "aks_cluster" {
 
 This configuration file is just to add as the clinet secret, `clinet_id` and `client_secret`:
 
-```bash
+```yaml
    # variables.tf
 
 variable "client_id" {
@@ -577,7 +577,7 @@ After all this, by going into the 'aks-terraform' directory, initialise and appl
 
 then putting the created terraform and terraform state files into .gitignore to not leak sensitive information:
 
-```bash
+```hcl
    # Ignore Terraform files in aks-terraform directory
    *.terraform/
    *terraform.tfstate
@@ -840,7 +840,7 @@ secret = secret_client.get_secret("secret-name")
 #### Retrieve the secret values
 secret_value = secret.value
 
-```bash
+```python
    # Replace these values with your Key Vault details
 key_vault_name = "finalkeyy"
 key_vault_url = f"https://{key_vault_name}.vault.azure.net/"
@@ -872,7 +872,7 @@ and adding the correct depndancies to the requiremnts.txt file:
 
 By adding a new feature I wanted to see if the pipeline would integrate it seemlessly.
 
-```bash
+```python
 #test feature to see if the pipeline works properly
 @app.route('/health')
 def health_check():
