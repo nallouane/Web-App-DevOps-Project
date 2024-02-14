@@ -808,6 +808,56 @@ In `log analytics`, in the `other` tab, is where all the saved quieries are stor
 
 By implementing these monitoring and alerting configurations, the AKS cluster is equipped to maintain optimal performance and respond promptly to potential issues.
 
+## Potential response
+
+### General Response Strategies:
+
+1. **Incident Documentation:**
+   - Document each incident, including the actions taken, for future reference and improvement.
+
+3. **Alert Threshold Review:**
+   - Periodically review and adjust alert thresholds based on evolving application requirements.
+
+4. **Historical Analysis:**
+   - Use monitoring tools to analyze historical trends, helping to plan for future resource needs and optimize the AKS cluster.
+
+5. **Capacity Planning:**
+   - Conduct regular capacity planning to anticipate resource requirements and scale the cluster accordingly.
+
+6. **Continuous Improvement:**
+   - Continuously assess and improve AKS configurations and operational procedures based on insights gained from monitoring and alerting.
+
+### Disk Usage Exceeds 90%:
+
+1. **Immediate Investigation:**
+   - Review the alert details to identify the specific node or nodes experiencing high disk usage.
+
+2. **Data Cleanup:**
+   - Remove unnecessary files or data to free up disk space.
+
+3. **Scaling Persistent Storage:**
+   - Assess the need for scaling persistent storage on affected nodes to accommodate increased disk usage.
+
+4. **Optimize Logging:**
+   - Review and optimize application logging configurations to prevent excessive log data from filling up the disk.
+
+5. **Container Cleanup:**
+   - Clean up unused containers and images on the affected nodes.
+
+### CPU and Memory Usage Exceeds 80%:
+
+1. **Immediate Investigation:**
+   - Identify the specific pods or containers causing high CPU or memory usage based on the alert details.
+
+2. **Vertical Scaling:**
+   - Adjust resource requests and limits for the affected pods to allocate more CPU and memory.
+
+3. **Horizontal Scaling:**
+   - Deploy additional instances of the application (horizontal scaling) if vertical scaling is insufficient.
+
+5. **Auto-Scaling Configuration:**
+   - Configure or adjust auto-scaling settings for the AKS cluster to dynamically adjust node count based on demand.
+
 ---
 ---
 
