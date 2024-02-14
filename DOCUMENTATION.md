@@ -1,6 +1,6 @@
 # Project Documentation
 
-Documentation project history.
+Documentation of project.
 
 ## Feature Implementation
 
