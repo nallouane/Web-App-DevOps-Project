@@ -656,8 +656,15 @@ In summary, this configuration deploys a Flask application with two replicas, ma
    - Use `kubectl get pods -w` to monitor the deployment process. Ensure that pods transition to the `Running` state.
 
 4. **Verification:**
-   - After deployment, use `kubectl get pods` and `kubectl get services` to verify the status and details of deployed resources.
+   - After deployment, use `kubectl get deployments` and `kubectl get services` to verify the status and details of deployed resources, also uing `kubectl get pods` to verify that everything is wokring correctly. 
 
+   After this port forwarding was on one of the pods to see if I could access the app. this command would map port 5000 from the local machine to port 5000 on the specified pod:
+
+   ```hcl
+      kubectl port-forward <pod-name> 5000:5000 
+      ```
+
+   Then checking that the app is running in the pod by navigating to `http://localhost:5000`.
 ### Cleanup
 
 To remove the deployed resources, use `kubectl delete -f application-manifest.yaml` and verify deletion using `kubectl get pods` and `kubectl get services`.
