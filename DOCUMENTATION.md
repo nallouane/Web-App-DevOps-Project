@@ -324,13 +324,11 @@ terraform init
 
 ## AKS Cluster Module Documentation
 
-This commit also includes updates to the AKS cluster module. The following changes were made:
-
 ## Introduction
 
 In the cluster module, I implemented the provisioning of an AKS cluster using Infrastructure as Code (IaC). The necessary Azure resources, including the AKS cluster, node pool, and service principal, were defined in the main.tf file.
 
-Start by creating a new module 'aks-cluster-module' inside the 'aks-terraform' directory.
+Creating a new directroy 'aks-cluster-module' inside the 'aks-terraform' directory.
 
 ## Input and Output Variables
 
@@ -423,7 +421,7 @@ There was one resource in the main.tf file,
    resource "azurerm_kubernetes_cluster" "aks_cluster"
    ```
 
-The follwing are just needed to configure correctly:
+The following are just needed to configure correctly:
 
 ```bash
   name                = var.aks_cluster_name
@@ -454,7 +452,7 @@ service_principal {
 
 ## aks-cluster/outputs.tf
 
-This file defines Terraform outputs for retrieving information about the created Azure Kubernetes Service (AKS) cluster.
+This configuration file outputs information about the created Azure Kubernetes Service (AKS) cluster.
 
 ### aks_cluster_name
 - **Purpose:** AKS cluster name output.
@@ -554,7 +552,7 @@ module "aks_cluster" {
 
 ## variables.tf
 
-was used to add as the clinet secret, 'clinet_id' and 'client_secret'
+This configuration file is just to add as the clinet secret, 'clinet_id' and 'client_secret':
 
 ```bash
    # variables.tf
@@ -574,14 +572,14 @@ variable "client_secret" {
 
 ---
 
-After all this, by going into the aks-terraform directory, initialise and apply the terraform configuratio using:
+After all this, by going into the 'aks-terraform' directory, initialise and apply the terraform configuration files using:
 
 ```bash
    terraform init
    terrafom apply 
 ```
 
-then putting the terraform and state files into my .gitignore to not leak sensitive information:
+then putting the created terraform and terraform state files into .gitignore to not leak sensitive information:
 
 ```bash
    # Ignore Terraform files in aks-terraform directory
@@ -591,9 +589,9 @@ then putting the terraform and state files into my .gitignore to not leak sensit
 
 ## Issues encountered
 
-I was having problems configuring my terraform files and couldn't make sense of it, so I choose to start over. Following the same process I worked.
+I was having problems configuring my terraform files and couldn't make sense of it, so I choose to start over. Following the same process, it ended up working.
 
-After some time of trying to get it to work (I forgot to do terreform init in one of the directories). I finally applied the terraform configuration, adding the terraform and state files to my local .gitignore and pushing to github.
+I forgot to do terreform init in the networking-module directory, was confusing at the time to troubleshoot.
 
 ---
 ---
@@ -602,7 +600,7 @@ After some time of trying to get it to work (I forgot to do terreform init in on
 
 ## Overview
 
-This documentation outlines the steps taken to deploy a containerized Flask application onto a Terraform-provisioned AKS (Azure Kubernetes Service) cluster. The deployment includes creating a Kubernetes Deployment and Service using manifests.
+This documentation outlines the steps taken to deploy a the application onto a Terraform-provisioned AKS (Azure Kubernetes Service) cluster. The deployment includes creating a Kubernetes Deployment and Service using manifests.
 
 ## Deployment Manifests
 
@@ -645,15 +643,7 @@ To remove the deployed resources, use `kubectl delete -f application-manifest.ya
 
 ### Issues Encountered:
 
-I used these steps to troubleshoot:
-
-- Check the correctness of image name and tag.
-- Verify image visibility and repository permissions.
-- Review network connectivity to the container registry.
-- Ensure authentication and pull secrets are correctly configured.
-
-but all went smoothly.
-
+nothing to note.
 ---
 ---
 ## CI/CD Pipeline Documentation
