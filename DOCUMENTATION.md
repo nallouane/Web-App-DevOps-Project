@@ -743,6 +743,10 @@ After enabling container insights, the following charts were created in the Metr
 4. **Bytes Read and Written per Second:**
    - *Purpose:* Monitor data I/O to identify potential performance bottlenecks by providing insights into data transfer rates.
 
+   The following is an example screenshot once you set all the charts onto a dashboard:
+
+   ![AKS Cluster Metrics](AKS%20cluster%20metrics.png)
+
 ## Log Analytics Configuration
 
 Log Analytics was configured to capture detailed information for more in-depth analysis:
