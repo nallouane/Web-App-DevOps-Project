@@ -606,22 +606,43 @@ This documentation outlines the steps taken to deploy a the application onto a T
 
 The Kubernetes manifests (`application-manifest.yaml`) define the following resources:
 
-### Deployment
+## Deployment
+- **Name:** `flask-app-deployment`
+  - **Description:** The unique identifier for the deployment (`flask-app-deployment`). This deployment ensures high availability by running two replicas of the Flask application.
 
-- **Name:** flask-app-deployment
-- **Replicas:** 2
-- **Selector Label:** app: flask-app
-- **Pod Template Label:** app: flask-app
-- **Container:** nallouane/myimage:latest
-- **Port:** 5000
-- **Deployment Strategy:** Rolling Update with maxUnavailable=1 and maxSurge=1
+- **Replicas:** `2`
+  - **Description:** Specifies that two identical instances (pods) of the application should be running.
 
-### Service
+- **Selector Label:** `app: flask-app`
+  - **Description:** The label selector used by the deployment to select the pods it manages.
 
-- **Name:** flask-app-service
-- **Selector Label:** app: flask-app
-- **Port Configuration:** TCP protocol, port 80, targetPort 5000
-- **Service Type:** ClusterIP
+- **Pod Template Label:** `app: flask-app`
+  - **Description:** The label applied to the pods created by this deployment.
+
+- **Container:** `nallouane/myimage:latest`
+  - **Description:** The container image (`nallouane/myimage:latest`) to be used for the pods.
+
+- **Port:** `5000`
+  - **Description:** The port on which the Flask application inside the container is listening.
+
+- **Deployment Strategy:** Rolling Update with `maxUnavailable=1` and `maxSurge=1`
+  - **Description:** Specifies the strategy for updating the pods. It ensures at most one pod is unavailable and one new pod is created at a time during the update.
+
+## Service
+- **Name:** `flask-app-service`
+  - **Description:** The unique identifier for the service (`flask-app-service`).
+
+- **Selector Label:** `app: flask-app`
+  - **Description:** The label selector to route traffic to pods with the specified label.
+
+- **Port Configuration:** TCP protocol, port `80`, targetPort `5000`
+  - **Description:** Defines how the service handles incoming traffic. It listens on port 80 and forwards it to the pods on port 5000.
+
+- **Service Type:** `ClusterIP`
+  - **Description:** Exposes the service within the cluster, making it accessible only from within the cluster.
+
+In summary, this configuration deploys a Flask application with two replicas, managed by a rolling update strategy, and exposes the application through a ClusterIP service on port 80, directing traffic to the pods on port 5000.
+
 
 ## Deployment Process
 
@@ -648,7 +669,7 @@ nothing to note.
 ---
 ## CI/CD Pipeline Documentation
 
-This document provides comprehensive information about the Continuous Integration/Continuous Deployment (CI/CD) pipeline in Azure DevOps for this project.
+This document provides comprehensive information about the Continuous Integration/Continuous Deployment (CI/CD) pipeline using the Azure DevOps Service.
 
 ### Azure DevOps Pipeline Configuration:
 
