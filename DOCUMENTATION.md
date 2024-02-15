@@ -511,7 +511,7 @@ provider "azurerm" {
 }
 ```
 
-**purpose**: Networking module instantiation for creating network resources. 
+**purpose**: Networking module implementation for creating network resources. 
 
 ```yaml
 module "networking" {
@@ -524,7 +524,7 @@ module "networking" {
 }
 ```
 
-**purpose**: AKS Cluster module instantiation for creating Azure Kubernetes Service.
+**purpose**: AKS Cluster module implementation for creating Azure Kubernetes Service.
 
 ```yaml
 module "aks_cluster" {
@@ -676,6 +676,18 @@ In summary, this configuration deploys a Flask application with two replicas, ma
 ### Cleanup
 
 To remove the deployed resources, use `kubectl delete -f application-manifest.yaml` and verify deletion using `kubectl get pods` and `kubectl get services`.
+
+## Distribution of the application
+
+### Internal Users
+
+Leverage the existing flask-app-service defined in the Kubernetes manifest. This service, configured as ClusterIP, exposes the Flask application within the Kubernetes cluster. When services within the cluster want to communicate with this application, they can use the service's cluster IP address and port 80, as defined in targetPort.
+
+### External Users
+
+To provide external access, other service types like Load Balancer or Ingress should be considered, as they provide mechanisms for broader accessibility and routing. If you need to distribute the application company-wide, you should consider using Ingress. Ingress controllers allow you to manage more advance routing, domain-based access, and can be a powerful way to manage both internal and external traffic. However, setting up an Ingress involves provisioning a company domain, which can be a complex and costly process.
+
+On the other hand, if your application was customer-facing rather than for internal use, using a Load Balancer service would be the preferred choice. This setup is especially suitable when you want to serve your application to a broader audience, such as a public website or a customer portal.
 
 ### Issues Encountered:
 
