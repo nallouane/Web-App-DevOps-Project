@@ -599,7 +599,7 @@ After configuring and applying all these files, it was time to push the files to
 
 I was having problems configuring my terraform files and couldn't make sense of it, so I choose to start over. Following the same process, it ended up working.
 
-I forgot to do terreform init in the networking-module directory.
+I forgot to do `terreform init` in the 'networking-module' directory.
 
 ---
 ---
@@ -788,7 +788,7 @@ Log Analytics was configured to capture detailed information for more in-depth a
 2. **Average Node Memory Usage Percentage per Minute:**
    - *Purpose:* Track node-level memory usage to detect memory-related performance concerns and optimize resource allocation.
 
-   ![Average Node Memory Usage](log-Average%20Node%20Memory%20Usage.png)
+   ![Average Node Memory Usage](log-Average%20Node%20memory%20Usage.png)
 
 
 3. **Pods Counts with Phase:**
