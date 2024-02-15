@@ -800,7 +800,7 @@ Log Analytics was configured to capture detailed information for more in-depth a
 4. **Find Warning Value in Container Logs:**
    - *Purpose:* Proactively detect issues or errors within containers by configuring Log Analytics to search for `warning` values in container logs.
 
-   ![Warning Container Logs](warning%20container%20logs.png)
+   ![Warning Container Logs](Warning%20container%20logs.png)
 
 
 5. **Monitoring Kubernetes Events:**
