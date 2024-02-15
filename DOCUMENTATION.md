@@ -146,13 +146,13 @@ The following steps outline how to build a Docker image for my application:
 
 **Remove Containers**: Use the `docker ps -a command` to list all containers, including stopped ones. Remove any unnecessary containers with `docker rm <container-id>` to free up resources.
 
-**Remove Images**: List all images using `docker images -a` and remove any unneeded images with `docker rmi <image-id>` to reclaim disk space
+**Remove Images**: List all images using `docker images -a` and remove any unneeded images with `docker rmi <image-id>` to reclaim disk space.
 
 ---
 ---
 ## Networking Module Documentation
 
-This section contains Terraform code for defining networking services as part of an Infrastructure as Code (IaC) approach.
+This section contains the process for provisioning networking services as part of an AKS cluster. This will be done using an `infrastructure as Code (IaC)` approach using `Terraform`.
 
 Started by creating a new directory, 'aks-terraform', and inside that creating a 'networking-module' directory.
 
@@ -166,6 +166,8 @@ The networking module is designed to create essential networking resources neede
 - Worker Node Subnet
 - Network Security Group (NSG)
 
+In order to provsion these resources we will need to implement the correct terraform configuration files.
+
 ## Files
 
 The terraform configuration has 3 files:
@@ -174,23 +176,25 @@ The terraform configuration has 3 files:
  - `main.tf`
  - `outputs.tf`
 
+ The follwoing describes each file, explaining the purpose of each block.
+
 ## networking-module/variables.tf
 
 ### `resource_group_name`
 
-- **Purpose:** This variable defines the name of the Azure Resource Group where the networking resources will be deployed.
+- **Purpose:** This variable defines the name of the 'Azure Resource Group' where the networking resources will be deployed.
 - **Type:** `string`
 - **Default:** `"aks-rg"`
 
 ### `location`
 
-- **Purpose:** Specifies the Azure region where the networking resources will be provisioned.
+- **Purpose:** Specifies the region where the networking resources will be provisioned.
 - **Type:** `string`
 - **Default:** `"UK South"`
 
 ### `vnet_address_space`
 
-- **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses.
+- **Purpose:** Defines the address space for the Virtual Network (VNet), specifying the range of IP addresses (The '/16' means the first 16 bits will be taken up).
 - **Type:** `list(string)`
 - **Default:** `["10.1.0.0/16"]`
 
@@ -289,7 +293,6 @@ resource "azurerm_network_security_rule" "ssh" {
 
 ## networking-module/outputs.tf
 
-### Purpose
 This configuration file outputs certain networking resources created by the networking module.
 
 ### vnet_id
@@ -324,13 +327,9 @@ terraform init
 
 ## Introduction
 
-In the cluster module, I implemented the provisioning of an AKS cluster using Infrastructure as Code (IaC). The necessary Azure resources, including the AKS cluster, node pool, and service principal, were defined in the main.tf file.
+The next step in provisioning an AKS cluster was to implement the 'aks-cluster-module', again using terraform configuration files.
 
 Creating a new directroy `aks-cluster-module` inside the `aks-terraform` directory.
-
-## Input and Output Variables
-
-Input variables for customizing the AKS cluster and output variables capturing essential information, such as the cluster name, ID, and Kubernetes configuration, were defined in the variables.tf and outputs.tf files, respectively.
 
 ## Files
 
@@ -340,9 +339,13 @@ The terraform configuration has 3 files:
  - `main.tf`
  - `outputs.tf`
 
-## aks-cluster/variables.tf
+ Input variables for customizing the AKS cluster and output variables capturing essential information, such as the cluster name, ID, and Kubernetes configuration, were defined in the variables.tf and outputs.tf files, respectively.
 
-The variables.tf allows for proper configuration of the cluster.
+ The following files include necessary Azure resources, including the AKS cluster, node pool, and service principal, were defined in the main.tf file.
+
+## aks-cluster-module/variables.tf
+
+The first part of the variables.tf file include default variables that will be 'overridden' later on in the provisioning process, this ensures proper configuration of the cluster.
 
 ```yaml
    
@@ -383,7 +386,7 @@ variable "service_principal_client_secret" {
 }
 ```
 
-The next section allows for inputs from the networking-module:
+The next section takes inputs from the networking-module:
 
 ```yaml
 # Input variables from the networking module
@@ -411,7 +414,7 @@ variable "aks_nsg_id" {
 }
 ```
 
-## aks-cluster/main.tf
+## aks-cluster-module/main.tf
 
 There was one resource in the main.tf file,
 
@@ -419,7 +422,7 @@ There was one resource in the main.tf file,
    resource "azurerm_kubernetes_cluster" "aks_cluster"
    ```
 
-The following are just needed to configure correctly:
+The following are from the first part of aks-cluster/variables.tf to configure correctly:
 
 ```yaml
   name                = var.aks_cluster_name
@@ -448,9 +451,9 @@ service_principal {
     client_secret = var.service_principal_client_secret}
 ```
 
-## aks-cluster/outputs.tf
+## aks-cluster-module/outputs.tf
 
-This configuration file outputs information about the created Azure Kubernetes Service (AKS) cluster.
+This configuration file outputs information from the aks-cluster-module/main.tf.
 
 ### aks_cluster_name
 - **Purpose:** AKS cluster name output.
@@ -462,7 +465,7 @@ This configuration file outputs information about the created Azure Kubernetes S
 
 ### aks_kubeconfig
 - **Purpose:** AKS cluster kubeconfig output.
-- **Description:** Outputs the kubeconfig file for accessing the AKS cluster. The kubeconfig file contains the necessary information to connect to the AKS cluster using tools like `kubectl`.
+- **Description:** Outputs the kubeconfig file for accessing the AKS cluster. The kubeconfig file contains the necessary information to connect to the AKS cluster using tools like `kubectl`, this is vital for interacting with the cluster from VScode, which will be implemented later on.
 
 
 ### Initialization
@@ -582,12 +585,21 @@ then putting the created terraform and terraform state files into .gitignore to 
    *.terraform/
    *terraform.tfstate
 ```
+### Pushing files to Github
+
+After configuring and applying all these files, it was time to push the files to Github.
+
+`Push .gitignore first`: Before pushing all the files to GitHub, the .gitignore file was pushed separately. This step was taken to check if GitHub would accept the push successfully. It's a common practice to push configuration files or files that specify what should be ignored before pushing larger or sensitive files.
+
+`Verify push success`: The reason for pushing the .gitignore file first was to ensure that the push operation itself was successful and that GitHub was ready to accept changes.
+
+`Push all files`: Once the success of the initial push was confirmed, all the remaining files, including Terraform files, were then pushed to GitHub. As this step was taken after the successful push of the .gitignore file, it reduced the risk of breaking the push operation due to large Terraform files.
 
 ## Issues encountered
 
 I was having problems configuring my terraform files and couldn't make sense of it, so I choose to start over. Following the same process, it ended up working.
 
-I forgot to do terreform init in the networking-module directory, was confusing at the time to troubleshoot.
+I forgot to do terreform init in the networking-module directory.
 
 ---
 ---
@@ -596,11 +608,11 @@ I forgot to do terreform init in the networking-module directory, was confusing 
 
 ## Overview
 
-This documentation outlines the steps taken to deploy a the application onto a Terraform-provisioned AKS (Azure Kubernetes Service) cluster. The deployment includes creating a Kubernetes Deployment and Service using manifests.
+With the AKS cluster successfully configured, the next step is to deploy our application onto it. The following documentation offers a comprehensive guide to the steps involved in setting up Kubernetes Deployment and Service instances through manifest files.
 
 ## Deployment Manifests
 
-The Kubernetes manifests (`application-manifest.yaml`) define the following resources:
+The Kubernetes manifest, `application-manifest.yaml`, define the following resources:
 
 ## Deployment
 - **Name:** `flask-app-deployment`
@@ -622,7 +634,7 @@ The Kubernetes manifests (`application-manifest.yaml`) define the following reso
   - **Description:** The port on which the Flask application inside the container is listening.
 
 - **Deployment Strategy:** Rolling Update with `maxUnavailable=1` and `maxSurge=1`
-  - **Description:** Specifies the strategy for updating the pods. It ensures at most one pod is unavailable and one new pod is created at a time during the update.
+  - **Description:** Specifies the strategy for updating the pods. It ensures at most one pod is unavailable and one new pod is created at a time during the update, minimising potentail downtime. The rolling update approach also guarantees a gradual transition during updates. It allows for a smooth and controlled rollout, ensuring that the application remains accessible with minimal impact on users.
 
 ## Service
 - **Name:** `flask-app-service`
