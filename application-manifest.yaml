@@ -19,6 +19,7 @@ spec:
         image: nallouane/myimage:latest
         imagePullPolicy: Always
         ports:
+        # This means that any traffic directed to this container's IP address within the Kubernetes cluster will be routed to port 5000 within the container.
         - containerPort: 5000
   strategy:
     type: RollingUpdate
