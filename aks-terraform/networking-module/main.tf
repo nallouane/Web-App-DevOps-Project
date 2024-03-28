@@ -51,7 +51,7 @@ resource "azurerm_network_security_rule" "kube_apiserver" {
   network_security_group_name = azurerm_network_security_group.aks_nsg.name
 }
 
-# Allow inbound traffic for SSH (TCP/22) - Optional
+# Allow inbound traffic for SSH (TCP/22)
 resource "azurerm_network_security_rule" "ssh" {
   name                        = "my_nsg_rule2"
   priority                    = 1002
