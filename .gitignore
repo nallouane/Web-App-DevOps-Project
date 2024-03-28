@@ -1,6 +1,7 @@
 # Ignore Terraform files in aks-terraform directory
 *.terraform/
 *terraform.tfstate
-aks-terraform/terraform.tfstate.backup
-
+.terraform.lock.hcl
+.terraform.tfstate.backup
+DOCUMENTATION.md
 
