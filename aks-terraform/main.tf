@@ -13,8 +13,8 @@ provider "azurerm" {
   features {}
   client_id       = var.client_id
   client_secret   = var.client_secret
-  subscription_id = "a79df85c-a45e-42a2-a339-c88a5a4f2849"
-  tenant_id       = "47d4542c-f112-47f4-92c7-a838d8a5e8ef"
+  subscription_id = "*"
+  tenant_id       = "*"
 }
 
 module "networking" {
