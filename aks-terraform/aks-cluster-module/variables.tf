@@ -56,7 +56,6 @@ variable "resource_group_name" {
   default = "aks-rg"
 }
 
-# Define more output variables as needed...
 variable "aks_nsg_id" {
   description = "ID of the Network Security Group (NSG) for AKS."
 }
