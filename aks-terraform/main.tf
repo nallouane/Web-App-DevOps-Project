@@ -13,8 +13,8 @@ provider "azurerm" {
   features {}
   client_id       = var.client_id
   client_secret   = var.client_secret
-  subscription_id = "*"
-  tenant_id       = "*"
+  subscription_id = "*"  #Replace with your subscription id
+  tenant_id       = "*"  #Replace with your tenant id
 }
 
 module "networking" {
@@ -24,8 +24,6 @@ module "networking" {
   resource_group_name = "aks-rg"
   location           = "UK South"
   vnet_address_space = ["10.0.0.0/16"]
-
-  # Define more input variables as needed...
 }
 
 
@@ -46,6 +44,4 @@ module "aks_cluster" {
   control_plane_subnet_id     = module.networking.control_plane_subnet_id
   worker_node_subnet_id       = module.networking.worker_node_subnet_id
   aks_nsg_id                  = module.networking.aks_nsg_id
-
-  # Define more input variables as needed...
 }
