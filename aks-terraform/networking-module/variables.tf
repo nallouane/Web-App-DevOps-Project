@@ -18,4 +18,3 @@ variable "vnet_address_space" {
   default     = ["10.1.0.0/16"]
 }
 
-# Define more variables as needed...
