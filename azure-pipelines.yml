@@ -16,7 +16,7 @@ steps:
     containerRegistry: 'docker-service-connection'
     repository: 'nallouane/myimage'
     command: 'buildAndPush'
-    Dockerfile: '**/dockerfile'
+    Dockerfile: '**/Dockerfile'
     tags: 'latest'
 
 - task: KubernetesManifest@1
