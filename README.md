@@ -205,10 +205,6 @@ By provisioning the NSG, I control all inbound and outbound traffic, ensuring th
 
 ## Monitoring
 
-## AKS Cluster Monitoring Documentation
-
-### Overview
-
 This documentation outlines the steps taken to establish effective monitoring and alerting for an Azure Kubernetes Service (AKS) cluster. Proper monitoring is essential for ensuring the optimal performance, resource allocation, and stability of the AKS environment.
 
 ### Metrics Explorer Configuration
@@ -236,7 +232,7 @@ After enabling container insights, the following charts were created in the Metr
 
    ![AKS Cluster Metrics](AKS%20cluster%20metrics.png)
 
-## Log Analytics Configuration
+### Log Analytics Configuration
 
 Log Analytics was configured to capture detailed information for more in-depth analysis:
 
