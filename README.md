@@ -49,12 +49,7 @@ include diagram
 
 ### Prerequisites
 
-For the application to succesfully run, you need to install the following packages:
-
-- flask (version 2.2.2)
-- pyodbc (version 4.0.39)
-- SQLAlchemy (version 2.0.21)
-- werkzeug (version 2.2.3)
+For the application to succesfully run, you will need to have the packages in the 'requirements.txt' file.
 
 ### Usage
 
@@ -73,21 +68,104 @@ To run the application, you simply need to run the `app.py` script in this repos
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
 ## GIT
-I have used githb and git for version control.
+I have used githb and git for version control. The following shows an example of this:
+
+## Feature Implementation
+
+## Introduction
+
+In this commit, I implemented a feature branch to introduce the `delivery_date` column into the codebase. The modifications involved updating both the `app.py` and `order.html` files within the repository.
+
+### Code Modifications
+
+1. **app.py**
+   - Added handling for the `delivery_date` column in the relevant parts of the code.
+   - Incorporated necessary logic to interact with the new data.
+
+2. **order.html**
+   - Updated the HTML template to display and capture the `delivery_date` to the order form.
+
+### Reversion
+
+Upon further consideration and feedback, it was determined that the introduction of the `delivery_date` column was not necessary for the current scope of the project. To revert the changes and restore the codebase to its previous state, the following actions were taken:
+
+```bash
+git revert <commit_hash_of_feature_branch>
+```
 
 ### Feature Implementation
 
 ## Docker
-Docker is an important tool becaus....
 
-Here is how I have used it
+By using docker, I containerized the application, allowing for distribution to different teams across the company to work on the project, irrespective of their working environment. The process involved creating a 'dockerfile', which gave instructions on containerising the application. Using ```docker build``` and ```docker push```, an image is created, and pushed to dockerhub.
+
+# Docker Build Instructions
+
+## Docker Build
+
+The following steps outline how to build a Docker image for my application:
+
+1. **Build the Docker Image**
+   -Use the docker build command to build the Docker image. Specify the path to the directory containing the Dockerfile using the dot (.) if the Dockerfile is in the current directory.
+
+   ```bash
+   docker build -t myimage:latest .   
+   ```
+
+   The `-t` flag is used to tag the image.
+
+   As Docker builds the image, it executes each instruction in the Dockerfile. One can see output indicating the progress of each step, displaying any error messages or warnings.
+
+   Once the build is complete, verifying that the image has been created was done by listing all Docker images on the system.
+
+   ```bash
+   docker images
+   ```
+2. **Run the image locally**
+
+   Running a Docker container locally ensures the application functions correctly within the containerized environment, I followed this process:
+
+   Execute the following command to initiate the Docker container: `docker run -p 5000:5000 myimage`. This maps port 5000 from your local machine to the container, enabling access to the containerized application from your local development environment.
+
+   Open a web browser and go to `http://127.0.0.1:5000` to interact with the application within the Docker container. Confirm the application works as expected by testing its functionality within the containerized environment.
+
+
+3. **Push to Docker Hub**
+
+   Finally, pushing the image to dockerhub:
+
+   ```bash   
+   docker login
+   docker tag <image-name>:<tag> <docker-hub-username>/<image-name>:<tag>
+   docker push <docker-hub-username>/<image-name>:<tag>
+   ```
+
+   When this process finished, I logged onto my Docker Hub repository and confirmed that the relevant docker image was listed. Following this process, one should be able to see the image's name, version (tag), and other relevant information.
+
+
+## Clean Up
+
+**Remove Containers**: Use the `docker ps -a command` to list all containers, including stopped ones. Remove any unnecessary containers with `docker rm <container-id>` to free up resources.
+
+**Remove Images**: List all images using `docker images -a` and remove any unneeded images with `docker rmi <image-id>` to reclaim disk space.
+
 
 ## Terraform
-Terraform is an important tool becaus....
 
-Here is how I have used it
+Terraform is an important tool because it allows me to provision all the necessary infrastructure resources efficiently and consistently, enabling seamless deployment and management of complex cloud environments.
+
+Here is how I have used it:
 
 ## Networking Module
+
+
+The networking module is designed to create essential networking resources needed for an Azure Kubernetes Service (AKS) cluster. These resources include:
+
+- Azure Resource Group
+- Virtual Network (VNet)
+- Control Plane Subnet
+- Worker Node Subnet
+- Network Security Group (NSG)
 
 
 ## AKS Cluster Module
