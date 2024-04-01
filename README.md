@@ -230,7 +230,7 @@ After enabling container insights, the following charts were created in the Metr
 
    The following screenshot of shows the metrics dashboard, containing all 4 charts:
 
-   ![AKS Cluster Metrics](AKS%20cluster%20metrics.png)
+   ![AKS Cluster Metrics](images/AKS%20cluster%20metrics.png)
 
 ### Log Analytics Configuration
 
@@ -239,30 +239,30 @@ Log Analytics was configured to capture detailed information for more in-depth a
 1. **Average Node CPU Usage Percentage per Minute:**
    - *Purpose:* Record granular data on node-level CPU usage, capturing logs per minute for detailed analysis.
 
-   ![Average Nodes CPU Usage](log-Average%20Nodes%20CPU%20Usage.png)
+   ![Average Nodes CPU Usage](images/log-Average%20Nodes%20CPU%20Usage.png)
 
 2. **Average Node Memory Usage Percentage per Minute:**
    - *Purpose:* Track node-level memory usage to detect memory-related performance concerns and optimize resource allocation.
 
-   ![Average Node Memory Usage](log-Average%20Node%20memory%20Usage.png)
+   ![Average Node Memory Usage](images/log-Average%20Node%20memory%20Usage.png)
 
 
 3. **Pods Counts with Phase:**
    - *Purpose:* Provide information on pod counts with different phases (Pending, Running, Terminating) for workload distribution insights.
 
-   ![Pod Counts with Phase](pod%20counts%20with%20Phase.png)
+   ![Pod Counts with Phase](images/pod%20counts%20with%20Phase.png)
 
 
 4. **Find Warning Value in Container Logs:**
    - *Purpose:* Proactively detect issues or errors within containers by configuring Log Analytics to search for `warning` values in container logs.
 
-   ![Warning Container Logs](Warning%20container%20logs.png)
+   ![Warning Container Logs](images/Warning%20container%20logs.png)
 
 
 5. **Monitoring Kubernetes Events:**
    - *Purpose:* Monitor Kubernetes events, including pod scheduling, scaling activities, and errors, to ensure overall cluster health and stability.
 
-   ![Kubernetes Events](kubernetes%20events.png)
+   ![Kubernetes Events](images/kubernetes%20events.png)
 
 
 In `log analytics`, in the `other` tab, is where all the saved quieries are stored.
