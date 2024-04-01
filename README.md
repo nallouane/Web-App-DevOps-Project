@@ -265,11 +265,6 @@ Log Analytics was configured to capture detailed information for more in-depth a
    ![Kubernetes Events](images/kubernetes%20events.png)
 
 
-In `log analytics`, in the `other` tab, is where all the saved quieries are stored.
-
-![saved queries](saved%20queries.png)
-
-
 ### Alert Rule Configuration
 
 #### Disk Usage Alert
