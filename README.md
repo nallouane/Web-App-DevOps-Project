@@ -12,7 +12,8 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 
 ## Architecture Diagram
 Here is the proposed architecture that I will be building in this project.
-include diagram
+
+   ![Architecture Diagram](<images/DevOps Pipeline Architecture.jpeg>)
 
 ### Tools
 
