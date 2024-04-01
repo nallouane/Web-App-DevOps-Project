@@ -18,7 +18,9 @@ include diagram
 
 - GIT
 - Docker
-- ...
+- Terraform
+- Kubernetes
+- Azure (including AKS and Azure devops)
 
 
 ### Prerequisites
