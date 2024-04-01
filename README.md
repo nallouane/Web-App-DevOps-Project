@@ -1,10 +1,11 @@
 # Web-App-DevOps-Project
 
-Welcome to the Web App DevOps Project repo! This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones.
+
+Welcome to the Web App DevOps Project repo! In this project, I endeavored to replicate the role of a DevOps engineer by implementing a streamlined pipeline for deploying a web application. This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones.
 
 ## Table of Contents
 
-- [Features](#features)
+- [Tools](#tools)
 - [Getting Started](#getting-started)
 - [Technology Stack](#technology-stack)
 - [Contributors](#contributors)
@@ -15,7 +16,7 @@ Here is the proposed architecture that I will be building in this project.
 
    ![Architecture Diagram](<images/DevOps Pipeline Architecture.jpeg>)
 
-### Tools
+### Tools <a name="tools"></a>
 
 - GIT
 - Docker
