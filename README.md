@@ -6,7 +6,7 @@ Welcome to the Web App DevOps Project repo! In this project, I endeavored to rep
 ## Table of Contents
 
 - [Tools](#tools)
-- [Getting Started](#getting-started)
+- [Web Application ](#Web-app)
 - [Technology Stack](#technology-stack)
 - [Contributors](#contributors)
 - [License](#license)
@@ -31,7 +31,7 @@ Here is the proposed architecture that I will be building in this project.
 - Terraform
 - Dockerfile
 
-## Web Application 
+## Web Application <a name="Web-app"></a>
 
 ### Features
 
