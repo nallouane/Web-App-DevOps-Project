@@ -196,7 +196,6 @@ The AKS Cluster Module provides a streamlined approach to deploying and managing
 
 - Seamless Integration: Seamlessly integrate with other Azure services and DevOps tools, enabling streamlined workflows for application development, deployment, and operations within the AKS environment.
 
-In summary, the AKS Cluster Module provides a comprehensive solution for deploying, managing, and scaling Kubernetes clusters on Azure, empowering organizations to harness the full potential of containerized applications with agility, reliability, and security.
 
 ## Security
 
