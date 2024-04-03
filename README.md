@@ -7,7 +7,11 @@ Welcome to the Web App DevOps Project repo! In this project, I endeavored to rep
 
 - [Tools](#tools)
 - [Web Application ](#Web-app)
-- [Technology Stack](#technology-stack)
+- [GIT](#GIT)
+- [Docker](#Docker)
+- [Terraform](#Terraform)
+- [Security](#Security)
+- [Monitoring](#Monitoring)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -69,7 +73,7 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
-## GIT
+## GIT <a name="GIT"></a>
 I have used githb and git for version control. The following shows an example of this:
 
 ## Feature Implementation
@@ -97,7 +101,7 @@ git revert <commit_hash_of_feature_branch>
 
 ### Feature Implementation
 
-## Docker
+## Docker <a name="Docker"></a>
 
 By using docker, I containerized the application, allowing for distribution to different teams across the company to work on the project, irrespective of their working environment. The process involved creating a 'dockerfile', which gave instructions on containerising the application. Using ```docker build``` and ```docker push```, an image is created, and pushed to dockerhub.
 
@@ -152,7 +156,7 @@ The following steps outline how to build a Docker image for my application:
 **Remove Images**: List all images using `docker images -a` and remove any unneeded images with `docker rmi <image-id>` to reclaim disk space.
 
 
-## Terraform
+## Terraform <a name="Terraform"></a>
 
 Terraform is an important tool because it allows me to provision all the necessary infrastructure resources efficiently and consistently, enabling seamless deployment and management of complex cloud environments.
 
@@ -199,12 +203,12 @@ The AKS Cluster Module provides a streamlined approach to deploying and managing
 - Seamless Integration: Seamlessly integrate with other Azure services and DevOps tools, enabling streamlined workflows for application development, deployment, and operations within the AKS environment.
 
 
-## Security
+## Security <a name="Security"></a>
 
 By provisioning the NSG, I control all inbound and outbound traffic, ensuring that any unauthorized access triggers alerts to the appropriate parties, thus maintaining security.
 
 
-## Monitoring
+## Monitoring <a name="Monitoring"></a>
 
 This documentation outlines the steps taken to establish effective monitoring and alerting for an Azure Kubernetes Service (AKS) cluster. Proper monitoring is essential for ensuring the optimal performance, resource allocation, and stability of the AKS environment.
 
